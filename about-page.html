@@ -31,7 +31,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      max-width: 1200px;
+      max-width: 1320px;
       width: 100%;
       padding: 0 24px;
     }
@@ -43,7 +43,7 @@
     /* ── COMMON ── */
     .gradient-text { background: linear-gradient(163deg,#1a4fe8 15%,#38c1ff 85%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .gradient-text-warm { background: linear-gradient(153deg,#ff9b2a 15%,#ffd138 85%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .section { max-width: 1200px; margin: 0 auto; padding: 80px 40px; }
+    .section { max-width: 1320px; margin: 0 auto; padding: 80px 60px; }
     .section-center { text-align: center; }
     .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
     h1.display { font-size: clamp(32px, 4vw, 48px); font-weight: 700; line-height: 1.2; color: #212529; }
@@ -232,13 +232,24 @@
     .card-body { padding: 14px 16px; font-size: 14px; line-height: 1.6; color: #6c757d; flex: 1; }
 
     /* ── MAP ── */
+    /* 外容器：地圖左、資訊右 */
     .map-section {
       position: relative;
       width: 100%;
-      height: 100vh;
-      max-height: 1080px;
+      display: flex;
+      flex-direction: row;
+      min-height: 560px;
+      max-height: 700px;
+      height: 65vh;
       overflow: hidden;
       background: #e8edf5;
+    }
+    /* 左側：地圖區（含標點） */
+    .map-left {
+      position: relative;
+      flex: 1 1 0;
+      min-width: 0;
+      overflow: hidden;
     }
     .map-bg-img {
       position: absolute;
@@ -249,76 +260,19 @@
       user-select: none;
       pointer-events: none;
     }
-    /* 左側漸層遮罩讓文字可讀 */
-    .map-left-fade {
+    /* 右側漸層遮罩 */
+    .map-right-fade {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to right, rgba(255,255,255,.88) 0%, rgba(255,255,255,.55) 32%, rgba(255,255,255,0) 55%);
+      background: linear-gradient(to left, rgba(232,237,245,.6) 0%, rgba(232,237,245,0) 40%);
       pointer-events: none;
       z-index: 1;
     }
-    /* 左側資訊面板 */
-    .map-info-panel {
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 400px;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      padding: 60px 0 60px 80px;
-    }
-    .map-info-inner { width: 100%; }
-    .map-info-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #888;
-      margin-bottom: 10px;
-    }
-    .map-info-title {
-      font-size: 32px;
-      font-weight: 700;
-      color: #212529;
-      line-height: 1.3;
-      margin-bottom: 20px;
-    }
-    /* 地點切換卡 */
-    .map-location-card {
-      background: white;
-      box-shadow: 0 4px 24px rgba(0,0,0,.12);
-      padding: 20px 24px;
-      min-height: 80px;
-      transition: opacity .3s ease;
-    }
-    .map-location-card { transition: opacity .15s ease; }
-    .map-loc-name {
-      font-size: 20px;
-      font-weight: 700;
-      color: #1a4fe8;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .map-loc-name::before {
-      content: '';
-      display: inline-block;
-      width: 8px; height: 8px;
-      background: #1a4fe8;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .map-loc-detail {
-      font-size: 13px;
-      color: #555;
-      line-height: 1.7;
-    }
-    .map-loc-detail p { margin: 0; }
-    /* 標點 */
+    /* 標點層 */
     .map-pins-layer {
       position: absolute;
       inset: 0;
-      z-index: 3;
+      z-index: 2;
     }
     .map-pin-btn {
       position: absolute;
@@ -327,7 +281,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0;
       background: none;
       border: none;
       padding: 0;
@@ -342,16 +295,17 @@
       box-shadow: 0 0 0 4px rgba(26,79,232,.25);
     }
     .pin-label {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
-      color: #444;
+      color: #333;
       white-space: nowrap;
-      background: rgba(255,255,255,.85);
+      background: rgba(255,255,255,.9);
       padding: 2px 8px;
       border-radius: 4px;
       margin-bottom: 4px;
       transition: color .2s;
       line-height: 1.4;
+      box-shadow: 0 1px 4px rgba(0,0,0,.1);
     }
     .pin-needle {
       width: 2px;
@@ -367,6 +321,157 @@
       transition: background .2s, box-shadow .2s;
     }
     .map-pin-btn.is-active .pin-needle { height: 18px; }
+
+    /* 右側：資訊面板（底圖與左側地圖同源） */
+    .map-right {
+      width: 360px;
+      flex-shrink: 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 48px 40px;
+      z-index: 3;
+      overflow: hidden;
+    }
+    /* 右側底圖（map-1.webp，與左側對齊右半部） */
+    .map-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('images/map-1.webp') right center / cover no-repeat;
+      z-index: 0;
+      filter: brightness(0.45) saturate(0.6);
+    }
+    /* 右側半透明白色遮罩讓文字易讀 */
+    .map-right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(10,20,60,0.55);
+      z-index: 1;
+    }
+    /* 右側內容置於遮罩之上 */
+    .map-right > * {
+      position: relative;
+      z-index: 2;
+    }
+    .map-info-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,.6);
+      margin-bottom: 8px;
+    }
+    .map-info-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,.2);
+    }
+    /* 資訊卡 */
+    .map-location-card {
+      transition: opacity .2s ease;
+      min-height: 80px;
+      background: transparent;
+    }
+    .map-loc-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #38c1ff;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .map-loc-name::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: #38c1ff;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .map-loc-detail {
+      font-size: 13px;
+      color: rgba(255,255,255,.8);
+      line-height: 1.8;
+    }
+    .map-loc-detail p { margin: 0 0 4px; }
+    .map-loc-placeholder {
+      font-size: 13px;
+      color: rgba(255,255,255,.35);
+      font-style: italic;
+    }
+
+    /* ── RWD ≤576px：按鈕列（左） + 詳細內容（右） ── */
+    @media (max-width: 576px) {
+      .map-section {
+        flex-direction: column;
+        height: auto;
+        max-height: none;
+        min-height: auto;
+      }
+      /* 地圖隱藏，改為上方縮圖 */
+      .map-left {
+        height: 200px;
+        flex: none;
+      }
+      /* 右側資訊區改為全寬 row 佈局 */
+      .map-right {
+        width: 100%;
+        padding: 0;
+        box-shadow: none;
+        flex-direction: row;
+        align-items: stretch;
+        min-height: 280px;
+      }
+      .map-right-header { display: none; }
+      /* 左側按鈕列 */
+      .map-btn-list {
+        display: flex !important;
+        flex-direction: column;
+        width: 110px;
+        flex-shrink: 0;
+        background: #f8f9fa;
+        border-right: 1px solid #e9ecef;
+      }
+      .map-btn-list button {
+        display: block;
+        width: 100%;
+        padding: 14px 10px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 600;
+        font-family: 'Noto Sans TC', sans-serif;
+        color: #6c757d;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #e9ecef;
+        cursor: pointer;
+        line-height: 1.4;
+        transition: background .15s, color .15s;
+      }
+      .map-btn-list button.is-active {
+        background: white;
+        color: #1a4fe8;
+        border-right: 2px solid #1a4fe8;
+        margin-right: -1px;
+      }
+      /* 右側詳細內容 */
+      .map-detail-panel {
+        flex: 1;
+        padding: 20px 16px;
+        overflow-y: auto;
+      }
+    }
+    /* 桌機：隱藏手機用按鈕列 */
+    @media (min-width: 577px) {
+      .map-btn-list { display: none !important; }
+      .map-detail-panel { display: contents; }
+    }
 
     /* ── BULLETS ── */
     .bullet-list { display: flex; flex-direction: column; gap: 12px; }
@@ -388,6 +493,37 @@
     /* ── PROMISE ── */
     .promise-block { font-size: 20px; font-weight: 700; color: #212529; line-height: 1.6; max-width: 700px; margin: 0 auto; text-align: center; }
 
+    /* ── TOP BANNER ── */
+    .page-banner {
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      position: relative;
+    }
+    .page-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    /* ── bg-1 背景區（mission → strength → 直到 map） ── */
+    .bg1-wrap {
+      position: relative;
+      background: url('images/bg-1.webp') center center / cover no-repeat;
+    }
+    .bg1-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(247,248,252,0.88);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .bg1-wrap > * {
+      position: relative;
+      z-index: 1;
+    }
     /* ── BAND ── */
     .blue-band { position: relative; width: 100%; height: 400px; overflow: hidden; }
     .footer-hero { background: linear-gradient(to right,#0c1a4a,#1a4fe8,#0ea5e9,#38c1ff); height: 180px; display: flex; align-items: center; justify-content: center; }
@@ -395,7 +531,7 @@
 </head>
 <body>
 
-<style>:root{--c-primary:#004b97;--c-text:#333;--c-text-light:#666;--c-bg:#fff;--c-bg-subtle:#f8f9fa;--c-border:#eee;--transition-base:all 0.3s ease;}#header{color:var(--c-text);position:sticky;top:0;background-color:var(--c-bg);border-bottom:1px solid var(--c-border);z-index:1000;transition:transform 0.3s ease;&.is-hidden{transform:translateY(-100%);}.layout-container{max-width:1220px;margin:0 auto;padding:0 10px;}> .layout-container{display:flex;justify-content:space-between;align-items:center;height:80px;}.brand-logo img{vertical-align:middle;}.header-actions{display:flex;align-items:center;height:100%;}.icon-btn{line-height:1;font-size:24px;cursor:pointer;user-select:none;background-color:transparent;border:none;color:var(--c-text);padding:5px 10px;margin-left:10px;transition:var(--transition-base);&:hover{color:var(--c-primary);}}.nav-trigger{display:none;}.primary-nav{display:flex;height:100%;margin:0;padding:0;list-style:none;.nav-node{height:100%;display:flex;align-items:center;> a{display:flex;align-items:center;height:100%;padding:0 15px;text-decoration:none;color:var(--c-text);font-weight:500;transition:var(--transition-base);&:hover{color:var(--c-primary);}}}.nav-node-relative{position:relative;}}.dropdown-mega{position:absolute;top:100%;left:0;width:100%;background-color:var(--c-bg);box-shadow:0 10px 20px rgba(0,0,0,0.05);border-top:1px solid var(--c-border);opacity:0;visibility:hidden;transform:translateY(10px);transition:var(--transition-base);.mega-content{position:relative;display:flex;min-height:400px;}}.mega-sidebar{list-style:none;margin:0;padding:20px 0;width:250px;border-right:1px solid var(--c-border);flex-shrink:0;.sidebar-item{> a{display:block;padding:12px 20px;text-decoration:none;color:var(--c-text);font-weight:500;transition:var(--transition-base);cursor:pointer;&:hover{background-color:var(--c-bg-subtle);color:var(--c-primary);}}&.is-active > a{background-color:var(--c-bg-subtle);color:var(--c-primary);font-weight:700;}}}.mega-panels{flex:1;padding:30px 40px;.mega-panel{display:none;height:100%;}& .is-active{display:block;}}.panel-grid{display:grid;grid-template-columns:1fr 350px;gap:40px;height:100%;.panel-links{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;align-content:start;.link-col{.nav-group-title{font-size:clamp(1rem,1.5vw,1.125rem);color:var(--c-primary);margin:0 0 15px 0;padding-bottom:10px;border-bottom:1px solid var(--c-border);font-weight:700;}a{display:block;color:var(--c-text-light);text-decoration:none;padding:6px 0;font-size:0.95rem;transition:var(--transition-base);&:hover{color:var(--c-primary);transform:translateX(5px);}}}}.panel-feature{border-left:1px solid var(--c-border);padding-left:40px;img{width:100%;height:auto;border-radius:4px;margin-bottom:15px;}p{font-size:0.95rem;color:var(--c-text-light);line-height:1.6;margin:0;}}}.dropdown-small{position:absolute;top:100%;left:0;min-width:200px;background-color:var(--c-bg);box-shadow:0 10px 20px rgba(0,0,0,0.05);border-top:2px solid var(--c-primary);opacity:0;visibility:hidden;transform:translateY(10px);transition:var(--transition-base);padding:10px 0;z-index:100;a{display:block;padding:10px 20px;color:var(--c-text);text-decoration:none;transition:var(--transition-base);&:hover{color:var(--c-primary);background-color:var(--c-bg-subtle);}}}@media (min-width:992px){.primary-nav .nav-node:hover .dropdown-mega,.primary-nav .nav-node:hover .dropdown-small{opacity:1;visibility:visible;transform:translateY(0);}.dropdown-mega{max-height:calc(100vh - 80px);overflow-y:auto;}}@media (max-width:991px){.nav-trigger{display:block;}.primary-nav{display:flex;position:absolute;top:100%;left:0;width:100%;height:calc(100vh - 80px);overflow-y:auto;background-color:var(--c-bg);flex-direction:column;border-top:1px solid var(--c-border);box-shadow:0 10px 20px rgba(0,0,0,0.1);opacity:0;visibility:hidden;transform:translateY(10px);transition:var(--transition-base);&.is-open{opacity:1;visibility:visible;transform:translateY(0);}.nav-node{height:auto;flex-direction:column;align-items:flex-start;> a{width:100%;padding:15px 20px;border-bottom:1px solid var(--c-border);}}}.dropdown-mega,.dropdown-small{position:static;display:grid;grid-template-rows:0fr;transition:grid-template-rows 0.3s ease;box-shadow:none;border-top:none;width:100%;background-color:var(--c-bg-subtle);opacity:1;visibility:visible;transform:none;}.nav-node.is-expanded .dropdown-mega,.nav-node.is-expanded .dropdown-small{grid-template-rows:1fr;}.mega-accordion-wrapper,.small-accordion-wrapper{min-height:0;overflow:hidden;}.dropdown-small{padding:0;border-bottom:1px solid var(--c-border);a{padding:12px 20px 12px 40px;border-bottom:1px solid var(--c-border);&:last-child{border-bottom:none;}}}.mega-content{flex-direction:column;min-height:auto;}.mega-sidebar{display:none;}.mega-panels{padding:0;display:flex;flex-direction:column;.mega-panel{display:block !important;height:auto;}}.panel-grid{grid-template-columns:1fr;gap:0;padding:0;.panel-links{display:flex;flex-direction:column;gap:0;padding:0;.link-col{display:flex;flex-direction:column;.nav-group-title{padding:12px 20px 12px 30px;margin:0;border-bottom:1px solid var(--c-border);font-size:1rem;color:var(--c-primary);}a{display:block;padding:12px 20px 12px 40px;border-bottom:1px solid var(--c-border);color:var(--c-text-light);font-size:0.95rem;}}}.panel-feature{display:none;}}}}#search-overlay{position:fixed;inset:0;background-color:rgba(255,255,255,0.98);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:var(--transition-base);&.is-active{opacity:1;visibility:visible;}.search-close{position:absolute;top:30px;right:30px;font-size:40px;background-color:transparent;border:none;cursor:pointer;color:var(--c-text-light);transition:var(--transition-base);&:hover{color:var(--c-primary);transform:rotate(90deg);}}form{width:100%;max-width:800px;padding:0 20px;.ty{display:flex;align-items:center;border-bottom:2px solid var(--c-primary);padding-bottom:10px;.inputfrom{flex:1;border:none;background-color:transparent;font-size:clamp(1.5rem,3vw,2.5rem);outline:none;color:var(--c-text);min-width:0;}.button-1{background-color:var(--c-primary);color:var(--c-bg);border:none;padding:12px 30px;font-size:1.1rem;cursor:pointer;border-radius:4px;margin-left:20px;font-weight:500;transition:var(--transition-base);&:hover{opacity:0.9;}}}}}</style>
+<style>:root{--c-primary:#004b97;--c-text:#333;--c-text-light:#666;--c-bg:#fff;--c-bg-subtle:#f8f9fa;--c-border:#eee;--transition-base:all 0.3s ease;}#header{color:var(--c-text);position:sticky;top:0;background-color:var(--c-bg);border-bottom:1px solid var(--c-border);z-index:1000;transition:transform 0.3s ease;&.is-hidden{transform:translateY(-100%);}.layout-container{max-width:1320px;margin:0 auto;padding:0 10px;}> .layout-container{display:flex;justify-content:space-between;align-items:center;height:80px;}.brand-logo img{vertical-align:middle;}.header-actions{display:flex;align-items:center;height:100%;}.icon-btn{line-height:1;font-size:24px;cursor:pointer;user-select:none;background-color:transparent;border:none;color:var(--c-text);padding:5px 10px;margin-left:10px;transition:var(--transition-base);&:hover{color:var(--c-primary);}}.nav-trigger{display:none;}.primary-nav{display:flex;height:100%;margin:0;padding:0;list-style:none;.nav-node{height:100%;display:flex;align-items:center;> a{display:flex;align-items:center;height:100%;padding:0 15px;text-decoration:none;color:var(--c-text);font-weight:500;transition:var(--transition-base);&:hover{color:var(--c-primary);}}}.nav-node-relative{position:relative;}}.dropdown-mega{position:absolute;top:100%;left:0;width:100%;background-color:var(--c-bg);box-shadow:0 10px 20px rgba(0,0,0,0.05);border-top:1px solid var(--c-border);opacity:0;visibility:hidden;transform:translateY(10px);transition:var(--transition-base);.mega-content{position:relative;display:flex;min-height:400px;}}.mega-sidebar{list-style:none;margin:0;padding:20px 0;width:250px;border-right:1px solid var(--c-border);flex-shrink:0;.sidebar-item{> a{display:block;padding:12px 20px;text-decoration:none;color:var(--c-text);font-weight:500;transition:var(--transition-base);cursor:pointer;&:hover{background-color:var(--c-bg-subtle);color:var(--c-primary);}}&.is-active > a{background-color:var(--c-bg-subtle);color:var(--c-primary);font-weight:700;}}}.mega-panels{flex:1;padding:30px 40px;.mega-panel{display:none;height:100%;}& .is-active{display:block;}}.panel-grid{display:grid;grid-template-columns:1fr 350px;gap:40px;height:100%;.panel-links{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;align-content:start;.link-col{.nav-group-title{font-size:clamp(1rem,1.5vw,1.125rem);color:var(--c-primary);margin:0 0 15px 0;padding-bottom:10px;border-bottom:1px solid var(--c-border);font-weight:700;}a{display:block;color:var(--c-text-light);text-decoration:none;padding:6px 0;font-size:0.95rem;transition:var(--transition-base);&:hover{color:var(--c-primary);transform:translateX(5px);}}}}.panel-feature{border-left:1px solid var(--c-border);padding-left:40px;img{width:100%;height:auto;border-radius:4px;margin-bottom:15px;}p{font-size:0.95rem;color:var(--c-text-light);line-height:1.6;margin:0;}}}.dropdown-small{position:absolute;top:100%;left:0;min-width:200px;background-color:var(--c-bg);box-shadow:0 10px 20px rgba(0,0,0,0.05);border-top:2px solid var(--c-primary);opacity:0;visibility:hidden;transform:translateY(10px);transition:var(--transition-base);padding:10px 0;z-index:100;a{display:block;padding:10px 20px;color:var(--c-text);text-decoration:none;transition:var(--transition-base);&:hover{color:var(--c-primary);background-color:var(--c-bg-subtle);}}}@media (min-width:992px){.primary-nav .nav-node:hover .dropdown-mega,.primary-nav .nav-node:hover .dropdown-small{opacity:1;visibility:visible;transform:translateY(0);}.dropdown-mega{max-height:calc(100vh - 80px);overflow-y:auto;}}@media (max-width:991px){.nav-trigger{display:block;}.primary-nav{display:flex;position:absolute;top:100%;left:0;width:100%;height:calc(100vh - 80px);overflow-y:auto;background-color:var(--c-bg);flex-direction:column;border-top:1px solid var(--c-border);box-shadow:0 10px 20px rgba(0,0,0,0.1);opacity:0;visibility:hidden;transform:translateY(10px);transition:var(--transition-base);&.is-open{opacity:1;visibility:visible;transform:translateY(0);}.nav-node{height:auto;flex-direction:column;align-items:flex-start;> a{width:100%;padding:15px 20px;border-bottom:1px solid var(--c-border);}}}.dropdown-mega,.dropdown-small{position:static;display:grid;grid-template-rows:0fr;transition:grid-template-rows 0.3s ease;box-shadow:none;border-top:none;width:100%;background-color:var(--c-bg-subtle);opacity:1;visibility:visible;transform:none;}.nav-node.is-expanded .dropdown-mega,.nav-node.is-expanded .dropdown-small{grid-template-rows:1fr;}.mega-accordion-wrapper,.small-accordion-wrapper{min-height:0;overflow:hidden;}.dropdown-small{padding:0;border-bottom:1px solid var(--c-border);a{padding:12px 20px 12px 40px;border-bottom:1px solid var(--c-border);&:last-child{border-bottom:none;}}}.mega-content{flex-direction:column;min-height:auto;}.mega-sidebar{display:none;}.mega-panels{padding:0;display:flex;flex-direction:column;.mega-panel{display:block !important;height:auto;}}.panel-grid{grid-template-columns:1fr;gap:0;padding:0;.panel-links{display:flex;flex-direction:column;gap:0;padding:0;.link-col{display:flex;flex-direction:column;.nav-group-title{padding:12px 20px 12px 30px;margin:0;border-bottom:1px solid var(--c-border);font-size:1rem;color:var(--c-primary);}a{display:block;padding:12px 20px 12px 40px;border-bottom:1px solid var(--c-border);color:var(--c-text-light);font-size:0.95rem;}}}.panel-feature{display:none;}}}}#search-overlay{position:fixed;inset:0;background-color:rgba(255,255,255,0.98);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:var(--transition-base);&.is-active{opacity:1;visibility:visible;}.search-close{position:absolute;top:30px;right:30px;font-size:40px;background-color:transparent;border:none;cursor:pointer;color:var(--c-text-light);transition:var(--transition-base);&:hover{color:var(--c-primary);transform:rotate(90deg);}}form{width:100%;max-width:800px;padding:0 20px;.ty{display:flex;align-items:center;border-bottom:2px solid var(--c-primary);padding-bottom:10px;.inputfrom{flex:1;border:none;background-color:transparent;font-size:clamp(1.5rem,3vw,2.5rem);outline:none;color:var(--c-text);min-width:0;}.button-1{background-color:var(--c-primary);color:var(--c-bg);border:none;padding:12px 30px;font-size:1.1rem;cursor:pointer;border-radius:4px;margin-left:20px;font-weight:500;transition:var(--transition-base);&:hover{opacity:0.9;}}}}}</style>
   <header id="header">
     <div class="layout-container" id="navigationBar">
       <a href="/" class="brand-logo">
@@ -1066,6 +1202,11 @@
 
   <main>
 
+    <!-- ══ TOP BANNER ══ -->
+    <div class="page-banner">
+      <img src="images/banner-1.webp" alt="關於鼎新數智">
+    </div>
+
     <!-- ══ VISION ══ -->
     <section id="vision" class="vision-wrap">
       <div class="section section-center" style="position:relative;z-index:1">
@@ -1080,8 +1221,11 @@
       </div>
     </section>
 
+    <!-- ══ MISSION + STRENGTH（bg-1 背景區）══ -->
+    <div class="bg1-wrap">
+
     <!-- ══ MISSION ══ -->
-    <section id="mission" style="background:#f7f8fc">
+    <section id="mission" style="background:transparent">
       <div class="section section-center">
         <div class="section-label" style="color:#212529">MISSION &amp; CAPABILITY</div>
         <h1 class="display" style="margin-bottom:8px">我們的使命</h1>
@@ -1112,17 +1256,15 @@
               <button class="timeline-tab" data-tab="5">2021 共創</button>
               <button class="timeline-tab" data-tab="6">2022 技術革新</button>
               <button class="timeline-tab" data-tab="7">2024 蛻變</button>
-              <button class="timeline-tab" data-tab="8">－ 現在</button>
             </div>
 
             <!-- 內容面板 -->
             <div class="timeline-panels" id="timelinePanels">
-
               <!-- 0: 1982 -->
               <div class="timeline-panel is-active" data-panel="0">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num">1982</div>
+                    <div class="tl-year-num" style="font-size:42px">1982</div>
                     <div class="tl-year-tag">啟航</div>
                   </div>
                   <div class="tl-divider"></div>
@@ -1130,143 +1272,118 @@
                     <ul>
                       <li>鼎新成立</li>
                       <li>致力於為製造與流通企業提供資訊化服務。</li>
-                      <li>（此處可替換為實際內容）</li>
                     </ul>
                   </div>
                 </div>
               </div>
-
               <!-- 1: 2008 -->
               <div class="timeline-panel" data-panel="1">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num">2008</div>
+                    <div class="tl-year-num" style="font-size:42px">2008</div>
                     <div class="tl-year-tag">深耕拓展</div>
                   </div>
                   <div class="tl-divider"></div>
                   <div class="tl-body">
                     <ul>
-                      <li>深耕拓展階段里程碑一（待補充）</li>
-                      <li>深耕拓展階段里程碑二（待補充）</li>
+                      <li>榮獲經濟部第三屆工業永續精銳獎—技術服務類。</li>
+                      <li>以鼎捷集團，完整整合兩岸資源。</li>
+                      <li>成立鼎捷軟件（越南）。</li>
                     </ul>
                   </div>
                 </div>
               </div>
-
               <!-- 2: 2012 -->
               <div class="timeline-panel" data-panel="2">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num">2012</div>
+                    <div class="tl-year-num" style="font-size:42px">2012</div>
                     <div class="tl-year-tag">價值服務</div>
                   </div>
                   <div class="tl-divider"></div>
                   <div class="tl-body">
                     <ul>
-                      <li>價值服務階段里程碑一（待補充）</li>
-                      <li>價值服務階段里程碑二（待補充）</li>
+                      <li>企業數位化轉型全程價值服務，通過提供培訓分享、指標佈建、管理改善以及轉型支撐等程式與手段，創造數位應用價值，實現經營管理效益。</li>
                     </ul>
                   </div>
                 </div>
               </div>
-
               <!-- 3: 2015 -->
               <div class="timeline-panel" data-panel="3">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num">2015</div>
+                    <div class="tl-year-num" style="font-size:42px">2015</div>
                     <div class="tl-year-tag">跨越</div>
                   </div>
                   <div class="tl-divider"></div>
                   <div class="tl-body">
                     <ul>
-                      <li>跨越階段里程碑一（待補充）</li>
-                      <li>跨越階段里程碑二（待補充）</li>
+                      <li>發佈「智能+」戰略以及「一線三環互聯」的戰略路徑。</li>
+                      <li>（2014年）馬來西亞分公司成立，擴大海外業務版圖。</li>
                     </ul>
                   </div>
                 </div>
               </div>
-
               <!-- 4: 2018 -->
               <div class="timeline-panel" data-panel="4">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num">2018</div>
+                    <div class="tl-year-num" style="font-size:42px">2018</div>
                     <div class="tl-year-tag">聚智</div>
                   </div>
                   <div class="tl-divider"></div>
                   <div class="tl-body">
                     <ul>
-                      <li>聚智階段里程碑一（待補充）</li>
-                      <li>聚智階段里程碑二（待補充）</li>
+                      <li>進駐台中中軟園區，建造數位人才培訓與合作夥伴創新匯集團地。</li>
+                      <li>鼎華系統成立，聚焦智能製造領域方案服務。</li>
+                      <li>（2019年）泰國分公司成立。持續推進企業出海服務。</li>
                     </ul>
                   </div>
                 </div>
               </div>
-
               <!-- 5: 2021 -->
               <div class="timeline-panel" data-panel="5">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num">2021</div>
+                    <div class="tl-year-num" style="font-size:42px">2021</div>
                     <div class="tl-year-tag">共創</div>
                   </div>
                   <div class="tl-divider"></div>
                   <div class="tl-body">
                     <ul>
-                      <li>共創階段里程碑一（待補充）</li>
-                      <li>共創階段里程碑二（待補充）</li>
+                      <li>「5GAIoT體驗園區」正式啟用。</li>
+                      <li>成立知識型創新互動個人化「就享知」網站。</li>
                     </ul>
                   </div>
                 </div>
               </div>
-
               <!-- 6: 2022 -->
               <div class="timeline-panel" data-panel="6">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num">2022</div>
+                    <div class="tl-year-num" style="font-size:42px">2022</div>
                     <div class="tl-year-tag">技術革新</div>
                   </div>
                   <div class="tl-divider"></div>
                   <div class="tl-body">
                     <ul>
-                      <li>技術革新階段里程碑一（待補充）</li>
-                      <li>技術革新階段里程碑二（待補充）</li>
+                      <li>鼎新成立40周年。</li>
+                      <li>發佈以數智驅動為核心的新型 PaaS 平台「METIS」，打造未來企業與未來員工的智慧應用場景。</li>
                     </ul>
                   </div>
                 </div>
               </div>
-
               <!-- 7: 2024 -->
               <div class="timeline-panel" data-panel="7">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num">2024</div>
+                    <div class="tl-year-num" style="font-size:42px">2024</div>
                     <div class="tl-year-tag">蛻變</div>
                   </div>
                   <div class="tl-divider"></div>
                   <div class="tl-body">
                     <ul>
-                      <li>蛻變階段里程碑一（待補充）</li>
-                      <li>蛻變階段里程碑二（待補充）</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 8: 現在 -->
-              <div class="timeline-panel" data-panel="8">
-                <div class="tl-panel-inner">
-                  <div class="tl-year-badge">
-                    <div class="tl-year-num" style="font-size:32px">現在</div>
-                    <div class="tl-year-tag">持續進化</div>
-                  </div>
-                  <div class="tl-divider"></div>
-                  <div class="tl-body">
-                    <ul>
-                      <li>現在與未來里程碑一（待補充）</li>
-                      <li>現在與未來里程碑二（待補充）</li>
+                      <li>鼎新電腦，更名為「鼎新數智」面向數智未來煥新起航。</li>
                     </ul>
                   </div>
                 </div>
@@ -1351,30 +1468,17 @@
       </div>
     </section>
 
-    <!-- ══ MAP（互動地圖，1920×1080）══ -->
+    </div><!-- /bg1-wrap -->
+
+    <!-- ══ MAP：地圖（左）資訊（右）══ -->
     <div class="map-section" id="mapSection">
 
-      <!-- 底圖 -->
-      <img class="map-bg-img" src="images/map-1.webp" alt="亞太地圖">
-
-      <!-- 左側遮罩 -->
-      <div class="map-left-fade"></div>
-
-      <!-- 左側資訊面板 -->
-      <div class="map-info-panel">
-        <div class="map-info-inner">
-          <div class="map-info-label">ASIA PACIFIC</div>
-          <div class="map-info-title">立足台灣<br>布局亞太</div>
-          <!-- 動態資訊卡 -->
-          <div class="map-location-card" id="mapInfoCard">
-            <div class="map-loc-name" id="mapLocName">點選地圖標點查看詳情</div>
-            <div class="map-loc-detail" id="mapLocDetail"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 標點層（位置以底圖 1920×1080 為基準的百分比）-->
-      <div class="map-pins-layer">
+      <!-- 左側：地圖 + 標點 -->
+      <div class="map-left">
+        <img class="map-bg-img" src="images/map-1.webp" alt="亞太地圖">
+        <div class="map-right-fade"></div>
+        <!-- 桌機標點（≥577px 顯示）-->
+        <div class="map-pins-layer">
 
         <button class="map-pin-btn" style="left:68.5%;top:17%"
           data-name="台灣｜Taiwan"
@@ -1424,29 +1528,73 @@
           <span class="pin-circle"></span>
         </button>
 
-      </div><!-- /map-pins-layer -->
+        </div>
+      </div>
+
+      <!-- 右側：資訊面板 -->
+      <div class="map-right">
+        <!-- 桌機：標題（手機隱藏） -->
+        <div class="map-right-header">
+          <div class="map-info-label">ASIA PACIFIC</div>
+          <div class="map-info-title">立足台灣<br>布局亞太</div>
+        </div>
+
+        <!-- 手機版：左側按鈕列 -->
+        <div class="map-btn-list" id="mapBtnList">
+          <button data-idx="0" class=" is-active">台灣</button>
+          <button data-idx="1" class="">中國</button>
+          <button data-idx="2" class="">泰國</button>
+          <button data-idx="3" class="">越南</button>
+          <button data-idx="4" class="">馬來西亞</button>
+          <button data-idx="5" class="">印尼</button>
+        </div>
+
+        <!-- 詳細資訊 -->
+        <div class="map-detail-panel" id="mapDetailPanel">
+          <div class="map-location-card" id="mapInfoCard">
+            <div class="map-loc-name" id="mapLocName">點選標點查看詳情</div>
+            <div class="map-loc-detail" id="mapLocDetail">
+              <p class="map-loc-placeholder">← 點選左側地圖標點</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div><!-- /map-section -->
 
     <script>
     (function(){
-      const pins    = document.querySelectorAll('.map-pin-btn');
-      const locName = document.getElementById('mapLocName');
-      const locDetail = document.getElementById('mapLocDetail');
+      // 地點資料
+      const LOC_DATA = [{'name': '台灣｜Taiwan', 'detail': '<p>台北｜桃園｜新竹｜台中｜台南｜高雄</p>'}, {'name': '中國｜China', 'detail': '<p>華東地區：上海・蘇州・南京・無錫・杭州・寧波</p><p>廣東地區：東莞・廣州</p><p>特別行政區之一：深圳・珠海・福建・廈門</p><p>華南地區：重慶・成都</p><p>其他地區：昆山・惠州</p>'}, {'name': '泰國｜Thailand', 'detail': '<p>曼谷・羅勇・春武里</p>'}, {'name': '越南｜Vietnam', 'detail': '<p>河內・胡志明市・平陽</p>'}, {'name': '馬來西亞｜Malaysia', 'detail': '<p>Kuala Lumpur</p><p>DSC Consulting Sdn.Bhd (Digiwin.com.my)</p>'}, {'name': '印尼｜Indonesia', 'detail': '<p>雅加達・泗水</p>'}];
 
-      pins.forEach(pin => {
-        pin.addEventListener('click', () => {
-          // 移除舊 active
-          pins.forEach(p => p.classList.remove('is-active'));
-          pin.classList.add('is-active');
-          // 更新資訊卡（淡入）
-          const card = document.getElementById('mapInfoCard');
-          card.style.opacity = '0';
-          setTimeout(() => {
-            locName.textContent   = pin.dataset.name;
-            locDetail.innerHTML   = pin.dataset.detail;
-            card.style.opacity    = '1';
-          }, 150);
-        });
+      const pins    = document.querySelectorAll('.map-pin-btn');
+      const btnList = document.querySelectorAll('#mapBtnList button');
+      const locName   = document.getElementById('mapLocName');
+      const locDetail = document.getElementById('mapLocDetail');
+      const card      = document.getElementById('mapInfoCard');
+
+      function activate(idx) {
+        // 更新桌機標點
+        pins.forEach((p, i) => p.classList.toggle('is-active', i === idx));
+        // 更新手機按鈕
+        btnList.forEach((b, i) => b.classList.toggle('is-active', i === idx));
+        // 淡入更新資訊
+        card.style.opacity = '0';
+        setTimeout(() => {
+          locName.textContent = LOC_DATA[idx].name;
+          locDetail.innerHTML = LOC_DATA[idx].detail;
+          card.style.opacity  = '1';
+        }, 160);
+      }
+
+      // 桌機標點點擊
+      pins.forEach((pin, idx) => {
+        pin.addEventListener('click', () => activate(idx));
+      });
+
+      // 手機按鈕點擊
+      btnList.forEach((btn, idx) => {
+        btn.addEventListener('click', () => activate(idx));
       });
     })();
     </script>
@@ -1546,7 +1694,7 @@
   </main>
 
 <style>
-#footer{--footer-bg:#253b50;--footer-text:#fefefe;--footer-copy-bg:#132230;--container-max-width:1200px;background-color:var(--footer-bg);color:var(--footer-text);line-height:1.6}:where(#footer){a{color:var(--footer-text);text-decoration:none;transition:opacity .2s ease;&:hover{opacity:.7}}ul{list-style:none;padding:0;margin:0}}.footer-container{max-width:var(--container-max-width);margin:0 auto;padding:0 1rem}.footer-directory{padding:3rem 0;border-bottom:1px solid rgba(255,255,255,.1)}.directory-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2.5rem}.column-title{display:flex;align-items:center;justify-content:center;gap:.25rem;margin:0 0 1.25rem 0;font-size:clamp(1.125rem,2vw,1.375rem);font-weight:500;img{object-fit:contain}}.column-links{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem 1.5rem;width:fit-content;margin:0 auto}.footer-utilities{padding:1rem 0}.utilities-flex{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem}.social-block{display:flex;align-items:center;gap:1rem}.social-icons{display:flex;gap:.75rem}.lang-block select{padding:.5rem;border-radius:4px;background-color:rgba(255,255,255,.1);color:var(--footer-text);border:1px solid rgba(255,255,255,.2);outline:none;font-family:inherit;option{color:#333}}.legal-block{display:flex;flex-wrap:wrap;gap:1.5rem}.footer-copyright{background-color:var(--footer-copy-bg);padding:1.25rem 0;text-align:center}.mobile-sticky-cta{display:none}@media(max-width:479px){#footer{padding-bottom:70px}.mobile-sticky-cta{display:flex;justify-content:space-around;align-items:center;position:fixed;bottom:0;left:0;width:100%;background-color:var(--footer-bg);box-shadow:0 -2px 10px rgba(0,0,0,.3);z-index:100;a{display:flex;justify-content:center;align-items:center;flex:1;padding:.5rem 0;transition:transform .2s ease;&:hover{transform:scale(1.02)}img{display:block;max-height:50px;width:auto;object-fit:contain}}}}
+#footer{--footer-bg:#253b50;--footer-text:#fefefe;--footer-copy-bg:#132230;--container-max-width:1320px;background-color:var(--footer-bg);color:var(--footer-text);line-height:1.6}:where(#footer){a{color:var(--footer-text);text-decoration:none;transition:opacity .2s ease;&:hover{opacity:.7}}ul{list-style:none;padding:0;margin:0}}.footer-container{max-width:var(--container-max-width);margin:0 auto;padding:0 1rem}.footer-directory{padding:3rem 0;border-bottom:1px solid rgba(255,255,255,.1)}.directory-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2.5rem}.column-title{display:flex;align-items:center;justify-content:center;gap:.25rem;margin:0 0 1.25rem 0;font-size:clamp(1.125rem,2vw,1.375rem);font-weight:500;img{object-fit:contain}}.column-links{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem 1.5rem;width:fit-content;margin:0 auto}.footer-utilities{padding:1rem 0}.utilities-flex{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem}.social-block{display:flex;align-items:center;gap:1rem}.social-icons{display:flex;gap:.75rem}.lang-block select{padding:.5rem;border-radius:4px;background-color:rgba(255,255,255,.1);color:var(--footer-text);border:1px solid rgba(255,255,255,.2);outline:none;font-family:inherit;option{color:#333}}.legal-block{display:flex;flex-wrap:wrap;gap:1.5rem}.footer-copyright{background-color:var(--footer-copy-bg);padding:1.25rem 0;text-align:center}.mobile-sticky-cta{display:none}@media(max-width:479px){#footer{padding-bottom:70px}.mobile-sticky-cta{display:flex;justify-content:space-around;align-items:center;position:fixed;bottom:0;left:0;width:100%;background-color:var(--footer-bg);box-shadow:0 -2px 10px rgba(0,0,0,.3);z-index:100;a{display:flex;justify-content:center;align-items:center;flex:1;padding:.5rem 0;transition:transform .2s ease;&:hover{transform:scale(1.02)}img{display:block;max-height:50px;width:auto;object-fit:contain}}}}
 </style>
   <footer id="footer" class="footer-menu">
     <div class="footer-directory">
