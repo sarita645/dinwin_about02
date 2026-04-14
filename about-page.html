@@ -313,14 +313,22 @@
     .card-body { padding: 14px 16px; font-size: 14px; line-height: 1.6; color: #6c757d; flex: 1; }
 
     /* ── MAP（滿版 + 標點彈窗）── */
+    /* MAP 外容器 */
     .map-section {
       position: relative;
       width: 100%;
       height: 70vh;
       min-height: 520px;
       max-height: 780px;
-      overflow: hidden;
+      overflow: visible;
       background: #f0f2f5;
+    }
+    /* 底圖裁切層（overflow hidden 只套在底圖上，不影響標點） */
+    .map-bg-clip {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
     }
     /* 底圖 */
     .map-bg-img {
@@ -342,7 +350,7 @@
     /* ── 標點按鈕 ── */
     .map-pin-btn {
       position: absolute;
-      /* transform 由 JS 動態設定（cover 補正） */
+      transform: translate(-50%, -100%);
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -351,7 +359,6 @@
       border: none;
       padding: 0;
       z-index: 3;
-      transition: none; /* 避免位置計算時閃爍 */
     }
     /* 標點文字列（圖示 + 國名） */
     .pin-row {
@@ -1842,13 +1849,15 @@
     <!-- ══ MAP：滿版地圖 + 標點彈窗 ══ -->
     <div class="map-section" id="mapSection">
 
-      <!-- 底圖 -->
-      <img class="map-bg-img" src="images/map-1.webp" alt="亞太地圖">
+      <!-- 底圖（獨立裁切，不影響標點） -->
+      <div class="map-bg-clip">
+        <img class="map-bg-img" src="images/map-1.webp" alt="亞太地圖">
+      </div>
 
       <!-- 標點層 -->
       <div class="map-pins-layer">
 
-        <button class="map-pin-btn" data-px="50.5" data-py="9" style="left:0;top:0"
+        <button class="map-pin-btn" style="left:50.5%;top:9%"
           data-idx="0" data-side="right">
           <div class="pin-row">
             <span class="pin-icon"></span>
@@ -1857,7 +1866,7 @@
           <div class="pin-line"></div>
         </button>
 
-        <button class="map-pin-btn" data-px="40" data-py="9" style="left:0;top:0"
+        <button class="map-pin-btn" style="left:40%;top:9%"
           data-idx="1" data-side="left">
           <div class="pin-row">
             <span class="pin-icon"></span>
@@ -1866,7 +1875,7 @@
           <div class="pin-line"></div>
         </button>
 
-        <button class="map-pin-btn" data-px="39" data-py="48" style="left:0;top:0"
+        <button class="map-pin-btn" style="left:39%;top:48%"
           data-idx="2" data-side="left">
           <div class="pin-row">
             <span class="pin-icon"></span>
@@ -1875,7 +1884,7 @@
           <div class="pin-line"></div>
         </button>
 
-        <button class="map-pin-btn" data-px="52" data-py="43" style="left:0;top:0"
+        <button class="map-pin-btn" style="left:52%;top:43%"
           data-idx="3" data-side="left">
           <div class="pin-row">
             <span class="pin-icon"></span>
@@ -1884,7 +1893,7 @@
           <div class="pin-line"></div>
         </button>
 
-        <button class="map-pin-btn" data-px="34" data-py="73" style="left:0;top:0"
+        <button class="map-pin-btn" style="left:34%;top:73%"
           data-idx="4" data-side="left">
           <div class="pin-row">
             <span class="pin-icon"></span>
@@ -1893,7 +1902,7 @@
           <div class="pin-line"></div>
         </button>
 
-        <button class="map-pin-btn" data-px="45" data-py="89" style="left:0;top:0"
+        <button class="map-pin-btn" style="left:45%;top:89%"
           data-idx="5" data-side="left">
           <div class="pin-row">
             <span class="pin-icon"></span>
@@ -1937,7 +1946,14 @@
 
     <script>
     (function(){
-      const LOC_DATA = [{"name": "台灣｜ Taiwan", "cities": "<p>台北｜桃園｜新竹｜台中｜台南｜高雄</p>"}, {"name": "中國｜China", "cities": "<p>華東：上海・蘇州・南京・無錫・杭州・寧波</p><p>廣東：東莞・廣州</p><p>深圳・珠海・廈門・重慶・成都・昆山・惠州</p>"}, {"name": "泰國｜ Thailand", "cities": "<p>曼谷・羅勇・春武里</p>"}, {"name": "越南｜ Vietnam", "cities": "<p>河內・胡志明市・平陽</p>"}, {"name": "馬來西亞｜ Malaysia", "cities": "<p>Kuala Lumpur</p><p>DSC Consulting Sdn.Bhd (Digiwin.com.my)</p>"}, {"name": "印尼｜ Indonesia", "cities": "<p>雅加達・泗水</p>"}];
+      const LOC_DATA = [
+        {"name": "台灣｜ Taiwan",      "cities": "<p>台北｜桃園｜新竹｜台中｜台南｜高雄</p>"},
+        {"name": "中國｜China",         "cities": "<p>華東：上海・蘇州・南京・無錫・杭州・寧波</p><p>廣東：東莞・廣州</p><p>深圳・珠海・廈門・重慶・成都・昆山・惠州</p>"},
+        {"name": "泰國｜ Thailand",     "cities": "<p>曼谷・羅勇・春武里</p>"},
+        {"name": "越南｜ Vietnam",      "cities": "<p>河內・胡志明市・平陽</p>"},
+        {"name": "馬來西亞｜ Malaysia", "cities": "<p>Kuala Lumpur</p><p>DSC Consulting Sdn.Bhd (Digiwin.com.my)</p>"},
+        {"name": "印尼｜ Indonesia",    "cities": "<p>雅加達・泗水</p>"}
+      ];
 
       const pins       = document.querySelectorAll('.map-pin-btn');
       const popup      = document.getElementById('mapPopup');
@@ -1947,119 +1963,35 @@
       const mobCountry = document.getElementById('mapMobileCountry');
       const mobCities  = document.getElementById('mapMobileCities');
       const mapSection = document.getElementById('mapSection');
-      const bgImg      = mapSection.querySelector('.map-bg-img');
-
-      // 底圖原始尺寸（與製作的圖片一致）
-      const IMG_W = 2560;
-      const IMG_H = 1200;
 
       let activeIdx = -1;
 
-      /*
-       * cover 補正：計算底圖實際渲染的位置與縮放比
-       * object-fit: cover + object-position: center
-       * → 等比縮放到能覆蓋容器的最小尺寸，超出部分裁切
-       */
-      function getCoverOffset() {
-        const cW = mapSection.offsetWidth;
-        const cH = mapSection.offsetHeight;
-        const imgRatio = IMG_W / IMG_H;
-        const conRatio = cW / cH;
-
-        let renderW, renderH, offsetX, offsetY;
-
-        if (conRatio > imgRatio) {
-          // 容器比底圖更寬 → 以寬度為基準縮放，上下裁切
-          renderW = cW;
-          renderH = cW / imgRatio;
-          offsetX = 0;
-          offsetY = (cH - renderH) / 2;
-        } else {
-          // 容器比底圖更高 → 以高度為基準縮放，左右裁切
-          renderH = cH;
-          renderW = cH * imgRatio;
-          offsetX = (cW - renderW) / 2;
-          offsetY = 0;
-        }
-        return { renderW, renderH, offsetX, offsetY };
-      }
-
-      /* 把圖片百分比座標轉換為容器像素座標 */
-      function pctToPx(pxPct, pyPct) {
-        const { renderW, renderH, offsetX, offsetY } = getCoverOffset();
-        const x = offsetX + (pxPct / 100) * renderW;
-        const y = offsetY + (pyPct / 100) * renderH;
-        return { x, y };
-      }
-
-      /* 更新所有標點位置 */
-      function repositionPins() {
-        pins.forEach(pin => {
-          const px = parseFloat(pin.dataset.px);
-          const py = parseFloat(pin.dataset.py);
-          const { x, y } = pctToPx(px, py);
-          // transform: translate(-50%, -100%) 讓針尖對齊座標點
-          pin.style.left      = x + 'px';
-          pin.style.top       = y + 'px';
-          pin.style.transform = 'translate(-50%, -100%)';
-        });
-
-        // 若彈窗開著，同步更新位置
-        if (activeIdx >= 0) {
-          showPopup(pins[activeIdx], activeIdx, false);
-        }
-      }
-
-      function showPopup(pin, idx, animate = true) {
+      function showPopup(pin, idx) {
         const loc = LOC_DATA[idx];
         popCountry.textContent = loc.name;
         popCities.innerHTML    = loc.cities;
 
-        const mapW   = mapSection.offsetWidth;
-        const pinL   = parseFloat(pin.style.left);
-        const pinT   = parseFloat(pin.style.top);
-        const side   = pin.dataset.side;
+        const mapRect = mapSection.getBoundingClientRect();
+        const pinRect = pin.getBoundingClientRect();
+        const side    = pin.dataset.side;
+        const pinX    = pinRect.left - mapRect.left + pinRect.width / 2;
+        const pinY    = pinRect.top  - mapRect.top;
 
-        // 彈窗垂直對齊標點頂部附近
-        popup.style.top = (pinT - 60) + 'px';
+        popup.style.top = (pinY - 50) + 'px';
 
         if (side === 'right') {
-          // 台灣靠右 → 彈窗往左
           popup.style.left  = '';
-          popup.style.right = (mapW - pinL + 12) + 'px';
-          popup.querySelector('.map-popup-inner').style.cssText =
-            'padding:16px 20px 18px;position:relative;';
+          popup.style.right = (mapRect.width - pinX + 12) + 'px';
         } else {
           popup.style.right = '';
-          popup.style.left  = (pinL + 16) + 'px';
-          popup.querySelector('.map-popup-inner').style.cssText =
-            'padding:16px 20px 18px;position:relative;';
+          popup.style.left  = (pinX + 16) + 'px';
         }
-
-        if (animate) popup.classList.add('is-visible');
-        else popup.style.opacity = '1';
+        popup.classList.add('is-visible');
       }
 
       function hidePopup() {
         popup.classList.remove('is-visible');
       }
-
-      // 初始定位 + 等底圖載入後再定位一次
-      function init() {
-        repositionPins();
-        if (!bgImg.complete) {
-          bgImg.addEventListener('load', repositionPins);
-        }
-      }
-
-      // 視窗縮放時重新計算
-      let resizeTimer;
-      window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          repositionPins();
-        }, 60);
-      });
 
       // 桌機標點點擊
       pins.forEach((pin, idx) => {
@@ -2084,13 +2016,6 @@
         hidePopup();
         activeIdx = -1;
       });
-
-      // 初始化
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
-      }
 
       // 手機版 Tab 切換
       mobileTabs.forEach((tab, idx) => {
