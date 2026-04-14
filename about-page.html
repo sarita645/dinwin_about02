@@ -342,7 +342,7 @@
     /* ── 標點按鈕 ── */
     .map-pin-btn {
       position: absolute;
-      transform: translate(-50%, -100%);
+      /* transform 由 JS 動態設定（cover 補正） */
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -351,6 +351,7 @@
       border: none;
       padding: 0;
       z-index: 3;
+      transition: none; /* 避免位置計算時閃爍 */
     }
     /* 標點文字列（圖示 + 國名） */
     .pin-row {
@@ -526,10 +527,10 @@
     .bullet-dot { width: 8px; height: 8px; border-radius: 50%; background: #1a4fe8; flex-shrink: 0; margin-top: 6px; }
     .bullet-text { font-size: 14px; line-height: 1.6; color: #374151; }
 
-    /* ── COVERAGE（圓餅圖版）── */
+    /* ── COVERAGE（附圖版：圖片上方、文字下方）── */
     .coverage-grid {
       display: flex;
-      gap: 48px;
+      gap: 0;
       justify-content: center;
       flex-wrap: wrap;
       margin: 40px 0;
@@ -537,15 +538,20 @@
     .coverage-item {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      width: 220px;
+      align-items: flex-start;
+      gap: 14px;
+      flex: 1;
+      min-width: 220px;
+      max-width: 340px;
+      padding: 0 40px;
+      border-right: 1px solid #e9ecef;
     }
+    .coverage-item:last-child { border-right: none; }
     /* 圓餅圖容器（圖片版） */
     .pie-wrap {
       position: relative;
-      width: 160px;
-      height: 160px;
+      width: 140px;
+      height: 140px;
     }
     .pie-wrap img {
       width: 100%;
@@ -558,23 +564,40 @@
       position: absolute;
       inset: 0;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       pointer-events: none;
     }
     .pie-pct {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 900;
       color: white;
       line-height: 1;
       text-shadow: 0 1px 4px rgba(0,0,0,.35);
     }
     /* 文字區 */
-    .cov-title { font-size: 17px; font-weight: 700; color: #212529; line-height: 1.4; text-align: center; }
+    .cov-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #212529;
+      line-height: 1.5;
+      text-align: left;
+    }
     .cov-accent { color: #1a4fe8; }
-    .cov-cat { font-size: 14px; font-weight: 700; color: #e8444a; letter-spacing: 1.5px; margin-top: 4px; text-align: center; }
-    .cov-src { font-size: 11px; color: #aaa; margin-top: 2px; text-align: center; }
+    .cov-cat {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e8444a;
+      letter-spacing: 1px;
+      margin-top: 2px;
+      text-align: left;
+    }
+    .cov-src {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 2px;
+      text-align: left;
+    }
 
 
 
@@ -644,7 +667,7 @@
 
       /* Coverage */
       .coverage-grid { gap: 32px; }
-      .coverage-item { width: 190px; }
+      .coverage-item { min-width: 180px; padding: 0 24px; }
     }
 
     /* ── 768px：平板直向 ── */
@@ -673,14 +696,15 @@
       .stat-card { padding: 18px 20px; min-width: 100px; }
       .stat-number { font-size: 30px; }
 
-      /* Map 平板調整 */
-      .map-section { height: 55vh; min-height: 400px; }
+      /* Map ≥761px 微調高度 */
+      .map-section { height: 58vh; min-height: 420px; }
 
       /* Coverage */
-      .coverage-grid { gap: 24px; }
-      .coverage-item { width: 160px; }
-      .pie-wrap { width: 130px; height: 130px; }
-      .pie-pct { font-size: 22px; }
+      .coverage-grid { flex-direction: column; align-items: stretch; gap: 0; }
+      .coverage-item { flex-direction: row; align-items: center; gap: 20px; border-right: none; border-bottom: 1px solid #e9ecef; padding: 20px 16px; max-width: 100%; }
+      .coverage-item:last-child { border-bottom: none; }
+      .pie-wrap { width: 90px; height: 90px; flex-shrink: 0; }
+      .pie-pct { font-size: 18px; }
       .cov-title { font-size: 15px; }
 
       /* Blue band */
@@ -688,6 +712,26 @@
 
       /* Promise */
       .promise-block { font-size: 17px; }
+    }
+
+    /* ── 760px：地圖切換為上下堆疊版 ── */
+    @media (max-width: 760px) {
+      /* 地圖縮為上方區塊 */
+      .map-section {
+        height: 300px;
+        min-height: 240px;
+      }
+      /* 桌機彈窗隱藏 */
+      .map-popup { display: none !important; }
+      /* 標點縮小、不顯示名稱文字 */
+      .pin-name { display: none; }
+      .pin-line { display: none; }
+      .pin-icon {
+        width: 18px;
+        height: 22px;
+      }
+      /* 顯示手機版上下 UI */
+      .map-mobile-ui { display: block; }
     }
 
     /* ── 576px：手機 ── */
@@ -722,22 +766,19 @@
       .stat-card { width: 100%; max-width: 300px; padding: 16px 20px; }
       .stat-number { font-size: 28px; }
 
-      /* Map 手機版：地圖縮小 + 下方列表 UI */
-      .map-section { height: 260px; min-height: 220px; }
-      .map-popup { display: none !important; }
-      .map-mobile-ui { display: block; }
+      /* Map 極小螢幕高度縮小 */
+      .map-section { height: 220px; min-height: 180px; }
 
       /* Recognition bullets */
       .bullet-item { padding: 12px; }
       .bullet-text { font-size: 13px; }
 
       /* Coverage */
-      .coverage-grid { gap: 20px; }
-      .coverage-item { width: 140px; }
-      .pie-wrap { width: 110px; height: 110px; }
-      .pie-pct { font-size: 20px; }
-      .cov-title { font-size: 13px; }
-      .cov-cat { font-size: 12px; letter-spacing: 1px; }
+      .coverage-item { padding: 16px 12px; gap: 14px; }
+      .pie-wrap { width: 76px; height: 76px; }
+      .pie-pct { font-size: 16px; }
+      .cov-title { font-size: 14px; }
+      .cov-cat { font-size: 12px; letter-spacing: .5px; }
 
       /* Blue band */
       .blue-band { height: 200px; }
@@ -1807,7 +1848,7 @@
       <!-- 標點層 -->
       <div class="map-pins-layer">
 
-        <button class="map-pin-btn" style="left:68.5%;top:17%"
+        <button class="map-pin-btn" data-px="50.5" data-py="9" style="left:0;top:0"
           data-idx="0" data-side="right">
           <div class="pin-row">
             <span class="pin-icon"></span>
@@ -1816,7 +1857,7 @@
           <div class="pin-line"></div>
         </button>
 
-        <button class="map-pin-btn" style="left:57%;top:21%"
+        <button class="map-pin-btn" data-px="40" data-py="9" style="left:0;top:0"
           data-idx="1" data-side="left">
           <div class="pin-row">
             <span class="pin-icon"></span>
@@ -1825,7 +1866,7 @@
           <div class="pin-line"></div>
         </button>
 
-        <button class="map-pin-btn" style="left:45%;top:37%"
+        <button class="map-pin-btn" data-px="39" data-py="48" style="left:0;top:0"
           data-idx="2" data-side="left">
           <div class="pin-row">
             <span class="pin-icon"></span>
@@ -1834,7 +1875,7 @@
           <div class="pin-line"></div>
         </button>
 
-        <button class="map-pin-btn" style="left:52%;top:43%"
+        <button class="map-pin-btn" data-px="52" data-py="43" style="left:0;top:0"
           data-idx="3" data-side="left">
           <div class="pin-row">
             <span class="pin-icon"></span>
@@ -1843,7 +1884,7 @@
           <div class="pin-line"></div>
         </button>
 
-        <button class="map-pin-btn" style="left:47%;top:56%"
+        <button class="map-pin-btn" data-px="34" data-py="73" style="left:0;top:0"
           data-idx="4" data-side="left">
           <div class="pin-row">
             <span class="pin-icon"></span>
@@ -1852,7 +1893,7 @@
           <div class="pin-line"></div>
         </button>
 
-        <button class="map-pin-btn" style="left:56%;top:71%"
+        <button class="map-pin-btn" data-px="45" data-py="89" style="left:0;top:0"
           data-idx="5" data-side="left">
           <div class="pin-row">
             <span class="pin-icon"></span>
@@ -1897,57 +1938,134 @@
     <script>
     (function(){
       const LOC_DATA = [{"name": "台灣｜ Taiwan", "cities": "<p>台北｜桃園｜新竹｜台中｜台南｜高雄</p>"}, {"name": "中國｜China", "cities": "<p>華東：上海・蘇州・南京・無錫・杭州・寧波</p><p>廣東：東莞・廣州</p><p>深圳・珠海・廈門・重慶・成都・昆山・惠州</p>"}, {"name": "泰國｜ Thailand", "cities": "<p>曼谷・羅勇・春武里</p>"}, {"name": "越南｜ Vietnam", "cities": "<p>河內・胡志明市・平陽</p>"}, {"name": "馬來西亞｜ Malaysia", "cities": "<p>Kuala Lumpur</p><p>DSC Consulting Sdn.Bhd (Digiwin.com.my)</p>"}, {"name": "印尼｜ Indonesia", "cities": "<p>雅加達・泗水</p>"}];
-      const pins        = document.querySelectorAll('.map-pin-btn');
-      const popup       = document.getElementById('mapPopup');
-      const popCountry  = document.getElementById('popupCountry');
-      const popCities   = document.getElementById('popupCities');
-      const mobileTabs  = document.querySelectorAll('.map-mobile-tab');
-      const mobCountry  = document.getElementById('mapMobileCountry');
-      const mobCities   = document.getElementById('mapMobileCities');
-      const mapSection  = document.getElementById('mapSection');
+
+      const pins       = document.querySelectorAll('.map-pin-btn');
+      const popup      = document.getElementById('mapPopup');
+      const popCountry = document.getElementById('popupCountry');
+      const popCities  = document.getElementById('popupCities');
+      const mobileTabs = document.querySelectorAll('.map-mobile-tab');
+      const mobCountry = document.getElementById('mapMobileCountry');
+      const mobCities  = document.getElementById('mapMobileCities');
+      const mapSection = document.getElementById('mapSection');
+      const bgImg      = mapSection.querySelector('.map-bg-img');
+
+      // 底圖原始尺寸（與製作的圖片一致）
+      const IMG_W = 2560;
+      const IMG_H = 1200;
 
       let activeIdx = -1;
 
-      function showPopup(pin, idx) {
+      /*
+       * cover 補正：計算底圖實際渲染的位置與縮放比
+       * object-fit: cover + object-position: center
+       * → 等比縮放到能覆蓋容器的最小尺寸，超出部分裁切
+       */
+      function getCoverOffset() {
+        const cW = mapSection.offsetWidth;
+        const cH = mapSection.offsetHeight;
+        const imgRatio = IMG_W / IMG_H;
+        const conRatio = cW / cH;
+
+        let renderW, renderH, offsetX, offsetY;
+
+        if (conRatio > imgRatio) {
+          // 容器比底圖更寬 → 以寬度為基準縮放，上下裁切
+          renderW = cW;
+          renderH = cW / imgRatio;
+          offsetX = 0;
+          offsetY = (cH - renderH) / 2;
+        } else {
+          // 容器比底圖更高 → 以高度為基準縮放，左右裁切
+          renderH = cH;
+          renderW = cH * imgRatio;
+          offsetX = (cW - renderW) / 2;
+          offsetY = 0;
+        }
+        return { renderW, renderH, offsetX, offsetY };
+      }
+
+      /* 把圖片百分比座標轉換為容器像素座標 */
+      function pctToPx(pxPct, pyPct) {
+        const { renderW, renderH, offsetX, offsetY } = getCoverOffset();
+        const x = offsetX + (pxPct / 100) * renderW;
+        const y = offsetY + (pyPct / 100) * renderH;
+        return { x, y };
+      }
+
+      /* 更新所有標點位置 */
+      function repositionPins() {
+        pins.forEach(pin => {
+          const px = parseFloat(pin.dataset.px);
+          const py = parseFloat(pin.dataset.py);
+          const { x, y } = pctToPx(px, py);
+          // transform: translate(-50%, -100%) 讓針尖對齊座標點
+          pin.style.left      = x + 'px';
+          pin.style.top       = y + 'px';
+          pin.style.transform = 'translate(-50%, -100%)';
+        });
+
+        // 若彈窗開著，同步更新位置
+        if (activeIdx >= 0) {
+          showPopup(pins[activeIdx], activeIdx, false);
+        }
+      }
+
+      function showPopup(pin, idx, animate = true) {
         const loc = LOC_DATA[idx];
         popCountry.textContent = loc.name;
         popCities.innerHTML    = loc.cities;
 
-        // 計算彈窗位置（標點右側，或左側如果太靠右）
-        const mapRect  = mapSection.getBoundingClientRect();
-        const pinRect  = pin.getBoundingClientRect();
-        const side     = pin.dataset.side;
+        const mapW   = mapSection.offsetWidth;
+        const pinL   = parseFloat(pin.style.left);
+        const pinT   = parseFloat(pin.style.top);
+        const side   = pin.dataset.side;
 
-        const pinX = pinRect.left - mapRect.left + pinRect.width / 2;
-        const pinY = pinRect.top  - mapRect.top  + pinRect.height;
-
-        popup.style.top = (pinY - pinRect.height * 0.6) + 'px';
+        // 彈窗垂直對齊標點頂部附近
+        popup.style.top = (pinT - 60) + 'px';
 
         if (side === 'right') {
-          // 彈窗在標點左側
+          // 台灣靠右 → 彈窗往左
           popup.style.left  = '';
-          popup.style.right = (mapRect.width - pinX + 12) + 'px';
+          popup.style.right = (mapW - pinL + 12) + 'px';
           popup.querySelector('.map-popup-inner').style.cssText =
-            '--arrow-side: left; border-left: none;';
-          popup.style.transform = 'translateY(0) scale(1)';
+            'padding:16px 20px 18px;position:relative;';
         } else {
           popup.style.right = '';
-          popup.style.left  = (pinX + 16) + 'px';
+          popup.style.left  = (pinL + 16) + 'px';
+          popup.querySelector('.map-popup-inner').style.cssText =
+            'padding:16px 20px 18px;position:relative;';
         }
 
-        popup.classList.add('is-visible');
+        if (animate) popup.classList.add('is-visible');
+        else popup.style.opacity = '1';
       }
 
       function hidePopup() {
         popup.classList.remove('is-visible');
       }
 
+      // 初始定位 + 等底圖載入後再定位一次
+      function init() {
+        repositionPins();
+        if (!bgImg.complete) {
+          bgImg.addEventListener('load', repositionPins);
+        }
+      }
+
+      // 視窗縮放時重新計算
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          repositionPins();
+        }, 60);
+      });
+
       // 桌機標點點擊
       pins.forEach((pin, idx) => {
         pin.addEventListener('click', (e) => {
           e.stopPropagation();
           if (activeIdx === idx) {
-            // 再次點同一個 → 關閉
             pins.forEach(p => p.classList.remove('is-active'));
             hidePopup();
             activeIdx = -1;
@@ -1966,6 +2084,13 @@
         hidePopup();
         activeIdx = -1;
       });
+
+      // 初始化
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
 
       // 手機版 Tab 切換
       mobileTabs.forEach((tab, idx) => {
@@ -2002,12 +2127,10 @@
           <div class="coverage-item">
             <div class="pie-wrap">
               <img src="images/73percent.webp" alt="73% 覆蓋率">
-              <div class="pie-center">
-                <span class="pie-pct">73%</span>
-              </div>
+              <div class="pie-center"><span class="pie-pct">73%</span></div>
             </div>
             <div>
-              <div class="cov-title">鼎新客户覆蓋率達<br><span class="cov-accent">73%</span></div>
+              <div class="cov-title">鼎新客户<br>覆蓋率達<span class="cov-accent">73%</span></div>
               <div class="cov-cat">天下2000大企業調查</div>
               <div class="cov-src">*資料來源：天下雜誌823期</div>
             </div>
@@ -2015,12 +2138,10 @@
           <div class="coverage-item">
             <div class="pie-wrap">
               <img src="images/76percent.webp" alt="76% 覆蓋率">
-              <div class="pie-center">
-                <span class="pie-pct">76%</span>
-              </div>
+              <div class="pie-center"><span class="pie-pct">76%</span></div>
             </div>
             <div>
-              <div class="cov-title">鼎新客户覆蓋率達<br><span class="cov-accent">76%</span></div>
+              <div class="cov-title">鼎新客户<br>覆蓋率達<span class="cov-accent">76%</span></div>
               <div class="cov-cat">天下營運績效50強</div>
               <div class="cov-src">*資料來源：天下雜誌823期</div>
             </div>
@@ -2028,12 +2149,10 @@
           <div class="coverage-item">
             <div class="pie-wrap">
               <img src="images/61percent.webp" alt="61% 覆蓋率">
-              <div class="pie-center">
-                <span class="pie-pct">61%</span>
-              </div>
+              <div class="pie-center"><span class="pie-pct">61%</span></div>
             </div>
             <div>
-              <div class="cov-title">鼎新客戶覆蓋率達<br><span class="cov-accent">61%</span></div>
+              <div class="cov-title">鼎新客戶<br>覆蓋率達<span class="cov-accent">61%</span></div>
               <div class="cov-cat">天下2000大首次上榜</div>
               <div class="cov-src">*資料來源：天下雜誌823期</div>
             </div>
