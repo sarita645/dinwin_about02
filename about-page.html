@@ -312,26 +312,17 @@
     .card-img-placeholder { height: 160px; overflow: hidden; }
     .card-body { padding: 14px 16px; font-size: 14px; line-height: 1.6; color: #6c757d; flex: 1; }
 
-    /* ── MAP ── */
-    /* 外容器：地圖左、資訊右 */
+    /* ── MAP（滿版 + 標點彈窗）── */
     .map-section {
       position: relative;
       width: 100%;
-      display: flex;
-      flex-direction: row;
-      min-height: 560px;
-      max-height: 700px;
-      height: 65vh;
+      height: 70vh;
+      min-height: 520px;
+      max-height: 780px;
       overflow: hidden;
-      background: #e8edf5;
+      background: #f0f2f5;
     }
-    /* 左側：地圖區（含標點） */
-    .map-left {
-      position: relative;
-      flex: 1 1 0;
-      min-width: 0;
-      overflow: hidden;
-    }
+    /* 底圖 */
     .map-bg-img {
       position: absolute;
       inset: 0;
@@ -341,20 +332,14 @@
       user-select: none;
       pointer-events: none;
     }
-    /* 右側漸層遮罩 */
-    .map-right-fade {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to left, rgba(232,237,245,.6) 0%, rgba(232,237,245,0) 40%);
-      pointer-events: none;
-      z-index: 1;
-    }
     /* 標點層 */
     .map-pins-layer {
       position: absolute;
       inset: 0;
       z-index: 2;
     }
+
+    /* ── 標點按鈕 ── */
     .map-pin-btn {
       position: absolute;
       transform: translate(-50%, -100%);
@@ -365,127 +350,173 @@
       background: none;
       border: none;
       padding: 0;
-    }
-    .map-pin-btn:hover .pin-label,
-    .map-pin-btn.is-active .pin-label { color: #1a4fe8; font-weight: 700; }
-    .map-pin-btn:hover .pin-needle,
-    .map-pin-btn.is-active .pin-needle { background: #1a4fe8; }
-    .map-pin-btn:hover .pin-circle,
-    .map-pin-btn.is-active .pin-circle {
-      background: #1a4fe8;
-      box-shadow: 0 0 0 4px rgba(26,79,232,.25);
-    }
-    .pin-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: #333;
-      white-space: nowrap;
-      background: rgba(255,255,255,.9);
-      padding: 2px 8px;
-      border-radius: 4px;
-      margin-bottom: 4px;
-      transition: color .2s;
-      line-height: 1.4;
-      box-shadow: 0 1px 4px rgba(0,0,0,.1);
-    }
-    .pin-needle {
-      width: 2px;
-      height: 14px;
-      background: #6c757d;
-      transition: background .2s;
-    }
-    .pin-circle {
-      width: 12px; height: 12px;
-      border-radius: 50%;
-      background: #6c757d;
-      box-shadow: 0 0 0 3px rgba(108,117,125,.2);
-      transition: background .2s, box-shadow .2s;
-    }
-    .map-pin-btn.is-active .pin-needle { height: 18px; }
-
-    /* 右側：資訊面板（底圖與左側地圖同源） */
-    .map-right {
-      width: 360px;
-      flex-shrink: 0;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 48px 40px;
       z-index: 3;
-      overflow: hidden;
     }
-    /* 右側底圖（map-1.webp，與左側對齊右半部） */
-    .map-right::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url('images/map-1.webp') right center / cover no-repeat;
-      z-index: 0;
-      filter: brightness(0.45) saturate(0.6);
-    }
-    /* 右側半透明白色遮罩讓文字易讀 */
-    .map-right::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(10,20,60,0.55);
-      z-index: 1;
-    }
-    /* 右側內容置於遮罩之上 */
-    .map-right > * {
-      position: relative;
-      z-index: 2;
-    }
-    .map-info-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: rgba(255,255,255,.6);
-      margin-bottom: 8px;
-    }
-    .map-info-title {
-      font-size: 28px;
-      font-weight: 700;
-      color: #fff;
-      line-height: 1.3;
-      margin-bottom: 28px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid rgba(255,255,255,.2);
-    }
-    /* 資訊卡 */
-    .map-location-card {
-      transition: opacity .2s ease;
-      min-height: 80px;
-      background: transparent;
-    }
-    .map-loc-name {
-      font-size: 18px;
-      font-weight: 700;
-      color: #38c1ff;
-      margin-bottom: 10px;
+    /* 標點文字列（圖示 + 國名） */
+    .pin-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      margin-bottom: 6px;
     }
-    .map-loc-name::before {
-      content: '';
-      width: 8px; height: 8px;
-      background: #38c1ff;
-      border-radius: 50%;
+    /* 地點圖示（仿 Google Maps pin） */
+    .pin-icon {
+      width: 22px;
+      height: 28px;
+      position: relative;
       flex-shrink: 0;
     }
-    .map-loc-detail {
-      font-size: 13px;
-      color: rgba(255,255,255,.8);
-      line-height: 1.8;
+    .pin-icon::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 22px; height: 22px;
+      border-radius: 50% 50% 50% 0;
+      background: #6c757d;
+      rotate: -45deg;
+      transition: background .2s, transform .2s;
     }
-    .map-loc-detail p { margin: 0 0 4px; }
-    .map-loc-placeholder {
-      font-size: 13px;
-      color: rgba(255,255,255,.35);
-      font-style: italic;
+    .pin-icon::after {
+      content: '';
+      position: absolute;
+      top: 6px; left: 50%;
+      transform: translateX(-50%);
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: white;
+      z-index: 1;
     }
+    .map-pin-btn:hover .pin-icon::before,
+    .map-pin-btn.is-active .pin-icon::before {
+      background: #1a4fe8;
+      transform: translateX(-50%) scale(1.15);
+    }
+    /* 國名文字 */
+    .pin-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: #444;
+      white-space: nowrap;
+      line-height: 1.3;
+      transition: color .2s;
+    }
+    .map-pin-btn:hover .pin-name,
+    .map-pin-btn.is-active .pin-name {
+      color: #1a4fe8;
+      font-weight: 700;
+    }
+    /* 分隔線（國名後的橫線，只在 active 顯示） */
+    .pin-line {
+      width: 60px;
+      height: 1.5px;
+      background: #1a4fe8;
+      margin-top: 2px;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: opacity .25s, transform .25s;
+    }
+    .map-pin-btn.is-active .pin-line {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    /* ── 彈出資訊框 ── */
+    .map-popup {
+      position: absolute;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(6px) scale(.97);
+      transition: opacity .25s ease, transform .25s ease;
+      min-width: 220px;
+      max-width: 300px;
+    }
+    .map-popup.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .map-popup-inner {
+      background: white;
+      box-shadow: 0 8px 32px rgba(0,0,0,.14);
+      padding: 16px 20px 18px;
+      position: relative;
+    }
+    /* 小三角形連接線 */
+    .map-popup-inner::before {
+      content: '';
+      position: absolute;
+      left: -8px; top: 20px;
+      border: 8px solid transparent;
+      border-right-color: white;
+      border-left: none;
+      filter: drop-shadow(-2px 0 2px rgba(0,0,0,.06));
+    }
+    .popup-country {
+      font-size: 22px;
+      font-weight: 900;
+      color: #0ea5e9;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .popup-divider {
+      width: 100%;
+      height: 1px;
+      background: #e9ecef;
+      margin-bottom: 10px;
+    }
+    .popup-cities {
+      font-size: 13px;
+      color: #374151;
+      line-height: 1.7;
+    }
+    .popup-cities p { margin: 0 0 3px; }
+
+    /* ── 手機版 (≤576px)：改為列表切換 ── */
+    .map-mobile-ui {
+      display: none;
+    }
+    .map-mobile-info {
+      background: white;
+      padding: 20px;
+      border-top: 3px solid #1a4fe8;
+    }
+    .map-mobile-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .map-mobile-tab {
+      border: 1px solid #adb5bd;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Noto Sans TC', sans-serif;
+      color: #6c757d;
+      background: transparent;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .map-mobile-tab.is-active {
+      border-color: #1a4fe8;
+      color: #1a4fe8;
+      background: rgba(26,79,232,.05);
+    }
+    .map-mobile-country {
+      font-size: 20px;
+      font-weight: 900;
+      color: #0ea5e9;
+      margin-bottom: 8px;
+    }
+    .map-mobile-cities {
+      font-size: 14px;
+      color: #374151;
+      line-height: 1.7;
+    }
+    .map-mobile-cities p { margin: 0 0 3px; }
 
 
 
@@ -604,9 +635,8 @@
       /* Feature cards 2 欄 */
       .cards-grid { grid-template-columns: repeat(2, 1fr); }
 
-      /* Map 右側縮窄 */
-      .map-right { width: 300px; padding: 36px 28px; }
-      .map-info-title { font-size: 24px; }
+      /* Map 高度調整 */
+      .map-section { height: 60vh; }
 
       /* Stats */
       .stats-row { gap: 24px; }
@@ -643,25 +673,8 @@
       .stat-card { padding: 18px 20px; min-width: 100px; }
       .stat-number { font-size: 30px; }
 
-      /* Map：地圖轉為上下堆疊 */
-      .map-section {
-        flex-direction: column;
-        height: auto;
-        max-height: none;
-        min-height: auto;
-      }
-      .map-left { height: 300px; flex: none; }
-      .map-right {
-        width: 100%;
-        padding: 32px 28px;
-        flex-direction: column;
-      }
-      .map-right::before {
-        background-position: center center;
-      }
-      .map-info-title { font-size: 22px; margin-bottom: 20px; }
-      .map-btn-list { display: none !important; }
-      .map-detail-panel { display: contents; }
+      /* Map 平板調整 */
+      .map-section { height: 55vh; min-height: 400px; }
 
       /* Coverage */
       .coverage-grid { gap: 24px; }
@@ -709,43 +722,10 @@
       .stat-card { width: 100%; max-width: 300px; padding: 16px 20px; }
       .stat-number { font-size: 28px; }
 
-      /* Map：完全隱藏左側地圖，右側改成按鈕+內容 */
-      .map-section {
-        flex-direction: column;
-        height: auto; max-height: none; min-height: auto;
-      }
-      .map-left { display: none; }
-      .map-right {
-        width: 100%; padding: 0;
-        flex-direction: row;
-        align-items: stretch;
-        min-height: 280px;
-      }
-      .map-right-header { display: none; }
-      .map-btn-list {
-        display: flex !important;
-        flex-direction: column;
-        width: 110px; flex-shrink: 0;
-        background: #f8f9fa;
-        border-right: 1px solid #e9ecef;
-      }
-      .map-btn-list button {
-        display: block; width: 100%;
-        padding: 14px 10px; text-align: left;
-        font-size: 12px; font-weight: 600;
-        font-family: 'Noto Sans TC', sans-serif;
-        color: #6c757d; background: transparent;
-        border: none; border-bottom: 1px solid #e9ecef;
-        cursor: pointer; line-height: 1.4;
-        transition: background .15s, color .15s;
-      }
-      .map-btn-list button.is-active {
-        background: white; color: #1a4fe8;
-        border-right: 2px solid #1a4fe8; margin-right: -1px;
-      }
-      .map-detail-panel {
-        flex: 1; padding: 20px 16px; overflow-y: auto;
-      }
+      /* Map 手機版：地圖縮小 + 下方列表 UI */
+      .map-section { height: 260px; min-height: 220px; }
+      .map-popup { display: none !important; }
+      .map-mobile-ui { display: block; }
 
       /* Recognition bullets */
       .bullet-item { padding: 12px; }
@@ -1818,131 +1798,183 @@
 
     </div><!-- /bg1-wrap -->
 
-    <!-- ══ MAP：地圖（左）資訊（右）══ -->
+    <!-- ══ MAP：滿版地圖 + 標點彈窗 ══ -->
     <div class="map-section" id="mapSection">
 
-      <!-- 左側：地圖 + 標點 -->
-      <div class="map-left">
-        <img class="map-bg-img" src="images/map-1.webp" alt="亞太地圖">
-        <div class="map-right-fade"></div>
-        <!-- 桌機標點（≥577px 顯示）-->
-        <div class="map-pins-layer">
+      <!-- 底圖 -->
+      <img class="map-bg-img" src="images/map-1.webp" alt="亞太地圖">
+
+      <!-- 標點層 -->
+      <div class="map-pins-layer">
 
         <button class="map-pin-btn" style="left:68.5%;top:17%"
-          data-name="台灣｜Taiwan"
-          data-detail="<p>台北｜桃園｜新竹｜台中｜台南｜高雄</p>">
-          <span class="pin-label">台灣｜Taiwan</span>
-          <span class="pin-needle"></span>
-          <span class="pin-circle"></span>
-        </button>
-
-        <button class="map-pin-btn" style="left:58%;top:22%"
-          data-name="中國｜China"
-          data-detail="<p>華東地區：上海・蘇州・南京・無錫・杭州・寧波</p><p>廣東地區：東莞・廣州</p><p>特別行政區之一：深圳・珠海・福建・廈門</p><p>華南地區：重慶・成都</p><p>其他地區：昆山・惠州</p>">
-          <span class="pin-label">中國｜China</span>
-          <span class="pin-needle"></span>
-          <span class="pin-circle"></span>
-        </button>
-
-        <button class="map-pin-btn" style="left:46%;top:38%"
-          data-name="泰國｜Thailand"
-          data-detail="<p>曼谷・羅勇・春武里</p>">
-          <span class="pin-label">泰國｜Thailand</span>
-          <span class="pin-needle"></span>
-          <span class="pin-circle"></span>
-        </button>
-
-        <button class="map-pin-btn" style="left:53%;top:44%"
-          data-name="越南｜Vietnam"
-          data-detail="<p>河內・胡志明市・平陽</p>">
-          <span class="pin-label">越南｜Vietnam</span>
-          <span class="pin-needle"></span>
-          <span class="pin-circle"></span>
-        </button>
-
-        <button class="map-pin-btn" style="left:48%;top:57%"
-          data-name="馬來西亞｜Malaysia"
-          data-detail="<p>Kuala Lumpur</p><p>DSC Consulting Sdn.Bhd (Digiwin.com.my)</p>">
-          <span class="pin-label">馬來西亞｜Malaysia</span>
-          <span class="pin-needle"></span>
-          <span class="pin-circle"></span>
-        </button>
-
-        <button class="map-pin-btn" style="left:57%;top:72%"
-          data-name="印尼｜Indonesia"
-          data-detail="<p>雅加達・泗水</p>">
-          <span class="pin-label">印尼｜Indonesia</span>
-          <span class="pin-needle"></span>
-          <span class="pin-circle"></span>
-        </button>
-
-        </div>
-      </div>
-
-      <!-- 右側：資訊面板 -->
-      <div class="map-right">
-        <!-- 桌機：標題（手機隱藏） -->
-        <div class="map-right-header">
-          <div class="map-info-label">ASIA PACIFIC</div>
-          <div class="map-info-title">立足台灣<br>布局亞太</div>
-        </div>
-
-        <!-- 手機版：左側按鈕列 -->
-        <div class="map-btn-list" id="mapBtnList">
-          <button data-idx="0" class=" is-active">台灣</button>
-          <button data-idx="1" class="">中國</button>
-          <button data-idx="2" class="">泰國</button>
-          <button data-idx="3" class="">越南</button>
-          <button data-idx="4" class="">馬來西亞</button>
-          <button data-idx="5" class="">印尼</button>
-        </div>
-
-        <!-- 詳細資訊 -->
-        <div class="map-detail-panel" id="mapDetailPanel">
-          <div class="map-location-card" id="mapInfoCard">
-            <div class="map-loc-name" id="mapLocName">點選標點查看詳情</div>
-            <div class="map-loc-detail" id="mapLocDetail">
-              <p class="map-loc-placeholder">← 點選左側地圖標點</p>
-            </div>
+          data-idx="0" data-side="right">
+          <div class="pin-row">
+            <span class="pin-icon"></span>
+            <span class="pin-name">台灣｜ Taiwan</span>
           </div>
+          <div class="pin-line"></div>
+        </button>
+
+        <button class="map-pin-btn" style="left:57%;top:21%"
+          data-idx="1" data-side="left">
+          <div class="pin-row">
+            <span class="pin-icon"></span>
+            <span class="pin-name">中國｜China</span>
+          </div>
+          <div class="pin-line"></div>
+        </button>
+
+        <button class="map-pin-btn" style="left:45%;top:37%"
+          data-idx="2" data-side="left">
+          <div class="pin-row">
+            <span class="pin-icon"></span>
+            <span class="pin-name">泰國｜ Thailand</span>
+          </div>
+          <div class="pin-line"></div>
+        </button>
+
+        <button class="map-pin-btn" style="left:52%;top:43%"
+          data-idx="3" data-side="left">
+          <div class="pin-row">
+            <span class="pin-icon"></span>
+            <span class="pin-name">越南｜ Vietnam</span>
+          </div>
+          <div class="pin-line"></div>
+        </button>
+
+        <button class="map-pin-btn" style="left:47%;top:56%"
+          data-idx="4" data-side="left">
+          <div class="pin-row">
+            <span class="pin-icon"></span>
+            <span class="pin-name">馬來西亞｜ Malaysia</span>
+          </div>
+          <div class="pin-line"></div>
+        </button>
+
+        <button class="map-pin-btn" style="left:56%;top:71%"
+          data-idx="5" data-side="left">
+          <div class="pin-row">
+            <span class="pin-icon"></span>
+            <span class="pin-name">印尼｜ Indonesia</span>
+          </div>
+          <div class="pin-line"></div>
+        </button>
+
+      </div>
+
+
+      <!-- 共用彈窗（JS 控制位置） -->
+      <div class="map-popup" id="mapPopup">
+        <div class="map-popup-inner">
+          <div class="popup-country" id="popupCountry"></div>
+          <div class="popup-divider"></div>
+          <div class="popup-cities" id="popupCities"></div>
         </div>
       </div>
+
 
     </div><!-- /map-section -->
 
+
+      <!-- 手機版地圖 UI（≤576px）-->
+      <div class="map-mobile-ui" id="mapMobileUi">
+        <div class="map-mobile-info">
+          <div class="map-mobile-tabs" id="mapMobileTabs">
+          <button class="map-mobile-tab is-active" data-midx="0">台灣</button>
+          <button class="map-mobile-tab" data-midx="1">中國</button>
+          <button class="map-mobile-tab" data-midx="2">泰國</button>
+          <button class="map-mobile-tab" data-midx="3">越南</button>
+          <button class="map-mobile-tab" data-midx="4">馬來西亞</button>
+          <button class="map-mobile-tab" data-midx="5">印尼</button>
+          </div>
+          <div class="map-mobile-country" id="mapMobileCountry">台灣｜ Taiwan</div>
+          <div class="map-mobile-cities" id="mapMobileCities"><p>台北｜桃園｜新竹｜台中｜台南｜高雄</p></div>
+        </div>
+      </div>
+
+
     <script>
     (function(){
-      // 地點資料
-      const LOC_DATA = [{'name': '台灣｜Taiwan', 'detail': '<p>台北｜桃園｜新竹｜台中｜台南｜高雄</p>'}, {'name': '中國｜China', 'detail': '<p>華東地區：上海・蘇州・南京・無錫・杭州・寧波</p><p>廣東地區：東莞・廣州</p><p>特別行政區之一：深圳・珠海・福建・廈門</p><p>華南地區：重慶・成都</p><p>其他地區：昆山・惠州</p>'}, {'name': '泰國｜Thailand', 'detail': '<p>曼谷・羅勇・春武里</p>'}, {'name': '越南｜Vietnam', 'detail': '<p>河內・胡志明市・平陽</p>'}, {'name': '馬來西亞｜Malaysia', 'detail': '<p>Kuala Lumpur</p><p>DSC Consulting Sdn.Bhd (Digiwin.com.my)</p>'}, {'name': '印尼｜Indonesia', 'detail': '<p>雅加達・泗水</p>'}];
+      const LOC_DATA = [{"name": "台灣｜ Taiwan", "cities": "<p>台北｜桃園｜新竹｜台中｜台南｜高雄</p>"}, {"name": "中國｜China", "cities": "<p>華東：上海・蘇州・南京・無錫・杭州・寧波</p><p>廣東：東莞・廣州</p><p>深圳・珠海・廈門・重慶・成都・昆山・惠州</p>"}, {"name": "泰國｜ Thailand", "cities": "<p>曼谷・羅勇・春武里</p>"}, {"name": "越南｜ Vietnam", "cities": "<p>河內・胡志明市・平陽</p>"}, {"name": "馬來西亞｜ Malaysia", "cities": "<p>Kuala Lumpur</p><p>DSC Consulting Sdn.Bhd (Digiwin.com.my)</p>"}, {"name": "印尼｜ Indonesia", "cities": "<p>雅加達・泗水</p>"}];
+      const pins        = document.querySelectorAll('.map-pin-btn');
+      const popup       = document.getElementById('mapPopup');
+      const popCountry  = document.getElementById('popupCountry');
+      const popCities   = document.getElementById('popupCities');
+      const mobileTabs  = document.querySelectorAll('.map-mobile-tab');
+      const mobCountry  = document.getElementById('mapMobileCountry');
+      const mobCities   = document.getElementById('mapMobileCities');
+      const mapSection  = document.getElementById('mapSection');
 
-      const pins    = document.querySelectorAll('.map-pin-btn');
-      const btnList = document.querySelectorAll('#mapBtnList button');
-      const locName   = document.getElementById('mapLocName');
-      const locDetail = document.getElementById('mapLocDetail');
-      const card      = document.getElementById('mapInfoCard');
+      let activeIdx = -1;
 
-      function activate(idx) {
-        // 更新桌機標點
-        pins.forEach((p, i) => p.classList.toggle('is-active', i === idx));
-        // 更新手機按鈕
-        btnList.forEach((b, i) => b.classList.toggle('is-active', i === idx));
-        // 淡入更新資訊
-        card.style.opacity = '0';
-        setTimeout(() => {
-          locName.textContent = LOC_DATA[idx].name;
-          locDetail.innerHTML = LOC_DATA[idx].detail;
-          card.style.opacity  = '1';
-        }, 160);
+      function showPopup(pin, idx) {
+        const loc = LOC_DATA[idx];
+        popCountry.textContent = loc.name;
+        popCities.innerHTML    = loc.cities;
+
+        // 計算彈窗位置（標點右側，或左側如果太靠右）
+        const mapRect  = mapSection.getBoundingClientRect();
+        const pinRect  = pin.getBoundingClientRect();
+        const side     = pin.dataset.side;
+
+        const pinX = pinRect.left - mapRect.left + pinRect.width / 2;
+        const pinY = pinRect.top  - mapRect.top  + pinRect.height;
+
+        popup.style.top = (pinY - pinRect.height * 0.6) + 'px';
+
+        if (side === 'right') {
+          // 彈窗在標點左側
+          popup.style.left  = '';
+          popup.style.right = (mapRect.width - pinX + 12) + 'px';
+          popup.querySelector('.map-popup-inner').style.cssText =
+            '--arrow-side: left; border-left: none;';
+          popup.style.transform = 'translateY(0) scale(1)';
+        } else {
+          popup.style.right = '';
+          popup.style.left  = (pinX + 16) + 'px';
+        }
+
+        popup.classList.add('is-visible');
+      }
+
+      function hidePopup() {
+        popup.classList.remove('is-visible');
       }
 
       // 桌機標點點擊
       pins.forEach((pin, idx) => {
-        pin.addEventListener('click', () => activate(idx));
+        pin.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (activeIdx === idx) {
+            // 再次點同一個 → 關閉
+            pins.forEach(p => p.classList.remove('is-active'));
+            hidePopup();
+            activeIdx = -1;
+          } else {
+            pins.forEach(p => p.classList.remove('is-active'));
+            pin.classList.add('is-active');
+            showPopup(pin, idx);
+            activeIdx = idx;
+          }
+        });
       });
 
-      // 手機按鈕點擊
-      btnList.forEach((btn, idx) => {
-        btn.addEventListener('click', () => activate(idx));
+      // 點地圖空白處關閉彈窗
+      mapSection.addEventListener('click', () => {
+        pins.forEach(p => p.classList.remove('is-active'));
+        hidePopup();
+        activeIdx = -1;
+      });
+
+      // 手機版 Tab 切換
+      mobileTabs.forEach((tab, idx) => {
+        tab.addEventListener('click', () => {
+          mobileTabs.forEach(t => t.classList.remove('is-active'));
+          tab.classList.add('is-active');
+          mobCountry.textContent = LOC_DATA[idx].name;
+          mobCities.innerHTML    = LOC_DATA[idx].cities;
+        });
       });
     })();
     </script>
