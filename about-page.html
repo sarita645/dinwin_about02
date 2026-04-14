@@ -215,10 +215,104 @@
       transition: width .4s cubic-bezier(.4,0,.2,1);
     }
     @media(max-width:640px){
-      .timeline-container { border-radius: 0 40px 40px 0; padding: 32px 24px 40px 32px; }
-      .tl-panel-inner { flex-direction: column; gap: 16px; }
-      .tl-divider { display: none; }
-      .tl-year-num { font-size: 32px; }
+      /* 容器縮邊 */
+      .timeline-container {
+        border-radius: 0;
+        padding: 24px 20px 32px;
+        width: 100%;
+      }
+      .tl-progress-bar { display: none; }
+
+      /* 桌機用的 tabs + panels → 全部隱藏 */
+      .timeline-tabs  { display: none !important; }
+      .timeline-panels { display: none !important; }
+
+      /* 手機版 accordion 顯示 */
+      .tl-mobile-accordion { display: flex !important; }
+    }
+    @media(min-width:641px){
+      /* 桌機：隱藏手機版 accordion */
+      .tl-mobile-accordion { display: none !important; }
+    }
+
+    /* ── 手機 Accordion 樣式 ── */
+    .tl-mobile-accordion {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+    }
+    .tl-acc-item {
+      border-bottom: 1px solid #e9ecef;
+    }
+    /* 按鈕列（每個年份） */
+    .tl-acc-btn {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: 1px solid #adb5bd;
+      padding: 10px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      color: #6c757d;
+      cursor: pointer;
+      margin-bottom: 8px;
+      display: block;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .tl-acc-item.is-open .tl-acc-btn {
+      border-color: #1a4fe8;
+      color: #1a4fe8;
+      background: rgba(26,79,232,.04);
+      margin-bottom: 0;
+    }
+    /* 展開內容區（預設收合） */
+    .tl-acc-body {
+      display: none;
+      padding: 16px 4px 20px;
+    }
+    .tl-acc-item.is-open .tl-acc-body {
+      display: block;
+      animation: tl-fadein .3s ease forwards;
+    }
+    /* 年份大字 + tag */
+    .tl-acc-year {
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(163deg,#1a4fe8 15%,#38c1ff 85%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+    .tl-acc-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      background: #1a4fe8;
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .tl-acc-body ul {
+      list-style: disc;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 8px;
+    }
+    .tl-acc-body ul li {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #374151;
+    }
+    /* 非 active 的按鈕之間有間距 */
+    .tl-acc-item:not(.is-open) .tl-acc-btn {
+      margin-bottom: 8px;
     }
 
     /* ── FEATURE CARDS ── */
@@ -478,16 +572,61 @@
     .bullet-dot { width: 8px; height: 8px; border-radius: 50%; background: #1a4fe8; flex-shrink: 0; margin-top: 6px; }
     .bullet-text { font-size: 14px; line-height: 1.6; color: #374151; }
 
-    /* ── COVERAGE ── */
-    .coverage-grid { display: flex; gap: 48px; justify-content: center; flex-wrap: wrap; margin: 40px 0; }
-    .coverage-item { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 200px; }
-    .donut { width: 140px; height: 140px; position: relative; }
-    .donut svg { width: 100%; height: 100%; }
-    .donut-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: #1a4fe8; }
-    .cov-title { font-size: 18px; font-weight: 700; color: #212529; line-height: 1.4; }
+    /* ── COVERAGE（圓餅圖版）── */
+    .coverage-grid {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 40px 0;
+    }
+    .coverage-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      width: 220px;
+    }
+    /* 圓餅圖容器（圖片版） */
+    .pie-wrap {
+      position: relative;
+      width: 160px;
+      height: 160px;
+    }
+    .pie-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    /* 百分比數字疊在圖片正中央 */
+    .pie-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .pie-pct {
+      font-size: 28px;
+      font-weight: 900;
+      color: white;
+      line-height: 1;
+      text-shadow: 0 1px 4px rgba(0,0,0,.35);
+    }
+    /* 文字區 */
+    .cov-title { font-size: 17px; font-weight: 700; color: #212529; line-height: 1.4; text-align: center; }
     .cov-accent { color: #1a4fe8; }
-    .cov-cat { font-size: 15px; font-weight: 700; color: #e8444a; letter-spacing: 2px; margin-top: 4px; }
-    .cov-src { font-size: 12px; color: #888; margin-top: 2px; }
+    .cov-cat { font-size: 14px; font-weight: 700; color: #e8444a; letter-spacing: 1.5px; margin-top: 4px; text-align: center; }
+    .cov-src { font-size: 11px; color: #aaa; margin-top: 2px; text-align: center; }
+
+    @media(max-width:640px){
+      .coverage-grid { gap: 32px; }
+      .coverage-item { width: 150px; }
+      .pie-wrap { width: 130px; height: 130px; }
+    }
 
     /* ── PROMISE ── */
     .promise-block { font-size: 20px; font-weight: 700; color: #212529; line-height: 1.6; max-width: 700px; margin: 0 auto; text-align: center; }
@@ -1412,6 +1551,112 @@
         })();
         </script>
 
+      <div class="tl-mobile-accordion" id="tlAccordion">
+        <div class="tl-acc-item is-open" data-acc="0">
+          <button class="tl-acc-btn">1982 啟航</button>
+          <div class="tl-acc-body">
+            <div class="tl-acc-year">1982</div>
+            <span class="tl-acc-tag">啟航</span>
+            <ul>
+              <li>鼎新成立</li>
+              <li>致力於為製造與流通企業提供資訊化服務。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tl-acc-item" data-acc="1">
+          <button class="tl-acc-btn">2008 深耕拓展</button>
+          <div class="tl-acc-body">
+            <div class="tl-acc-year">2008</div>
+            <span class="tl-acc-tag">深耕拓展</span>
+            <ul>
+              <li>榮獲經濟部第三屆工業永續精銳獎—技術服務類。</li>
+              <li>以鼎捷集團，完整整合兩岸資源。</li>
+              <li>成立鼎捷軟件（越南）。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tl-acc-item" data-acc="2">
+          <button class="tl-acc-btn">2012 價值服務</button>
+          <div class="tl-acc-body">
+            <div class="tl-acc-year">2012</div>
+            <span class="tl-acc-tag">價值服務</span>
+            <ul>
+              <li>企業數位化轉型全程價值服務，通過提供培訓分享、指標佈建、管理改善以及轉型支撐等程式與手段，創造數位應用價值，實現經營管理效益。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tl-acc-item" data-acc="3">
+          <button class="tl-acc-btn">2015 跨越</button>
+          <div class="tl-acc-body">
+            <div class="tl-acc-year">2015</div>
+            <span class="tl-acc-tag">跨越</span>
+            <ul>
+              <li>發佈「智能+」戰略以及「一線三環互聯」的戰略路徑。</li>
+              <li>（2014年）馬來西亞分公司成立，擴大海外業務版圖。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tl-acc-item" data-acc="4">
+          <button class="tl-acc-btn">2018 聚智</button>
+          <div class="tl-acc-body">
+            <div class="tl-acc-year">2018</div>
+            <span class="tl-acc-tag">聚智</span>
+            <ul>
+              <li>進駐台中中軟園區，建造數位人才培訓與合作夥伴創新匯集團地。</li>
+              <li>鼎華系統成立，聚焦智能製造領域方案服務。</li>
+              <li>（2019年）泰國分公司成立。持續推進企業出海服務。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tl-acc-item" data-acc="5">
+          <button class="tl-acc-btn">2021 共創</button>
+          <div class="tl-acc-body">
+            <div class="tl-acc-year">2021</div>
+            <span class="tl-acc-tag">共創</span>
+            <ul>
+              <li>「5GAIoT體驗園區」正式啟用。</li>
+              <li>成立知識型創新互動個人化「就享知」網站。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tl-acc-item" data-acc="6">
+          <button class="tl-acc-btn">2022 技術革新</button>
+          <div class="tl-acc-body">
+            <div class="tl-acc-year">2022</div>
+            <span class="tl-acc-tag">技術革新</span>
+            <ul>
+              <li>鼎新成立40周年。</li>
+              <li>發佈以數智驅動為核心的新型 PaaS 平台「METIS」，打造未來企業與未來員工的智慧應用場景。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tl-acc-item" data-acc="7">
+          <button class="tl-acc-btn">2024 蛻變</button>
+          <div class="tl-acc-body">
+            <div class="tl-acc-year">2024</div>
+            <span class="tl-acc-tag">蛻變</span>
+            <ul>
+              <li>鼎新電腦，更名為「鼎新數智」面向數智未來煥新起航。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <script>
+      (function(){
+        const accItems = document.querySelectorAll('#tlAccordion .tl-acc-item');
+        accItems.forEach(item => {
+          item.querySelector('.tl-acc-btn').addEventListener('click', () => {
+            const isOpen = item.classList.contains('is-open');
+            // 關閉所有
+            accItems.forEach(i => i.classList.remove('is-open'));
+            // 如果原本沒開，就開啟（點同一個再點 → 關閉）
+            if (!isOpen) item.classList.add('is-open');
+          });
+        });
+      })();
+      </script>
+
         <!-- Further body copy -->
         <div style="display:flex;flex-direction:column;gap:14px;text-align:left;max-width:900px;margin:0 auto 48px">
           <p class="body-text">承載一路走來的發展軌跡與時代印記，長期深耕企業現場所累積的產業經驗、流程知識與企業數據，皆讓鼎新在迎向 AI 時代之際，已具備讓智能技術真正發揮價值的關鍵基底，亦是鼎新最核心的差異化優勢。</p>
@@ -1619,36 +1864,42 @@
         <div class="bordered-heading" style="text-align:left;max-width:960px;margin:0 auto 40px">2024年 鼎新客户覆蓋率</div>
         <div class="coverage-grid">
           <div class="coverage-item">
-            <div class="donut">
-              <svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="58" fill="#dbeafe"/><circle cx="70" cy="70" r="58" fill="none" stroke="#1a4fe8" stroke-width="20" stroke-dasharray="266 98" stroke-dashoffset="-20" stroke-linecap="round"/><circle cx="70" cy="70" r="58" fill="none" stroke="#bfdbfe" stroke-width="20" stroke-dasharray="98 266" stroke-dashoffset="-286" stroke-linecap="round"/></svg>
-              <div class="donut-label">73%</div>
+            <div class="pie-wrap">
+              <img src="images/73percent.webp" alt="73% 覆蓋率">
+              <div class="pie-center">
+                <span class="pie-pct">73%</span>
+              </div>
             </div>
-            <div style="width:100%;text-align:left">
-              <div class="cov-title">鼎新客户<br>覆蓋率達<span class="cov-accent">73%</span></div>
+            <div>
+              <div class="cov-title">鼎新客户覆蓋率達<br><span class="cov-accent">73%</span></div>
               <div class="cov-cat">天下2000大企業調查</div>
-              <div class="cov-src">*資料來源:天下雜誌823期</div>
+              <div class="cov-src">*資料來源：天下雜誌823期</div>
             </div>
           </div>
           <div class="coverage-item">
-            <div class="donut">
-              <svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="58" fill="#dbeafe"/><circle cx="70" cy="70" r="58" fill="none" stroke="#1a4fe8" stroke-width="20" stroke-dasharray="277 87" stroke-dashoffset="-20" stroke-linecap="round"/><circle cx="70" cy="70" r="58" fill="none" stroke="#bfdbfe" stroke-width="20" stroke-dasharray="87 277" stroke-dashoffset="-297" stroke-linecap="round"/></svg>
-              <div class="donut-label">76%</div>
+            <div class="pie-wrap">
+              <img src="images/76percent.webp" alt="76% 覆蓋率">
+              <div class="pie-center">
+                <span class="pie-pct">76%</span>
+              </div>
             </div>
-            <div style="width:100%;text-align:left">
-              <div class="cov-title">鼎新客户<br>覆蓋率達<span class="cov-accent">76%</span></div>
+            <div>
+              <div class="cov-title">鼎新客户覆蓋率達<br><span class="cov-accent">76%</span></div>
               <div class="cov-cat">天下營運績效50強</div>
-              <div class="cov-src">*資料來源:天下雜誌823期</div>
+              <div class="cov-src">*資料來源：天下雜誌823期</div>
             </div>
           </div>
           <div class="coverage-item">
-            <div class="donut">
-              <svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="58" fill="#dbeafe"/><circle cx="70" cy="70" r="58" fill="none" stroke="#1a4fe8" stroke-width="20" stroke-dasharray="222 142" stroke-dashoffset="-20" stroke-linecap="round"/><circle cx="70" cy="70" r="58" fill="none" stroke="#bfdbfe" stroke-width="20" stroke-dasharray="142 222" stroke-dashoffset="-242" stroke-linecap="round"/></svg>
-              <div class="donut-label">61%</div>
+            <div class="pie-wrap">
+              <img src="images/61percent.webp" alt="61% 覆蓋率">
+              <div class="pie-center">
+                <span class="pie-pct">61%</span>
+              </div>
             </div>
-            <div style="width:100%;text-align:left">
-              <div class="cov-title">鼎新客戶<br>覆蓋率達<span class="cov-accent">61%</span></div>
+            <div>
+              <div class="cov-title">鼎新客戶覆蓋率達<br><span class="cov-accent">61%</span></div>
               <div class="cov-cat">天下2000大首次上榜</div>
-              <div class="cov-src">*資料來源:天下雜誌823期</div>
+              <div class="cov-src">*資料來源：天下雜誌823期</div>
             </div>
           </div>
         </div>
@@ -1683,12 +1934,6 @@
     </section>
 
     <!-- ══ FOOTER HERO ══ -->
-    <div class="footer-hero">
-      <div style="text-align:center;color:white">
-        <p style="font-size:28px;font-weight:700;letter-spacing:2px">Datasys 鼎新數智</p>
-        <p style="font-size:14px;opacity:.75;margin-top:8px">用數智實現創想・讓更多人智慧工作 樂享生活</p>
-      </div>
-    </div>
 
   </main>
 
