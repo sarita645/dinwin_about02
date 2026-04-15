@@ -35,9 +35,9 @@
       width: 100%;
       padding: 0 24px;
     }
-    .about-subnav-title { font-weight: 700; font-size: 15px; color: #212529; padding: 10px 20px; }
+    .about-subnav-title { font-weight: 700; font-size: 16px; color: #212529; padding: 10px 20px; }
     .about-subnav-links { display: flex; gap: 4px; }
-    .about-subnav-links a { font-size: 14px; color: #212529; padding: 10px 18px; text-decoration: none; white-space: nowrap; transition: color .2s; }
+    .about-subnav-links a { font-size: 16px; color: #212529; padding: 10px 18px; text-decoration: none; white-space: nowrap; transition: color .2s; }
     .about-subnav-links a:hover { color: #004b97; }
 
     /* ── COMMON ── */
@@ -45,9 +45,9 @@
     .gradient-text-warm { background: linear-gradient(153deg,#ff9b2a 15%,#ffd138 85%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .section { max-width: 1320px; margin: 0 auto; padding: 80px 60px; }
     .section-center { text-align: center; }
-    .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+    .section-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
     h1.display { font-size: clamp(32px, 4vw, 48px); font-weight: 700; line-height: 1.2; color: #212529; }
-    .body-text { font-size: 15px; line-height: 1.7; color: #374151; max-width: 900px; }
+    .body-text { font-size: 16px; line-height: 1.7; color: #374151; max-width: 900px; }
     .bordered-heading { border-left: 4px solid #1a4fe8; padding-left: 16px; font-size: 28px; font-weight: 700; color: #212529; margin-bottom: 24px; }
 
     /* ── VISION ── */
@@ -58,38 +58,13 @@
     .stats-row { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; margin: 40px 0; }
     .stat-card { background: white; padding: 28px 40px; box-shadow: 0 4px 16px rgba(0,0,0,.1); text-align: center; min-width: 140px; }
     .stat-number { font-size: 38px; font-weight: 700; line-height: 1.2; }
-    .stat-label { font-size: 14px; color: #212529; margin-top: 6px; }
+    .stat-label { font-size: 16px; color: #212529; margin-top: 6px; }
 
     /* ── TIMELINE ── */
-    .timeline-wrap { position: relative; }
-    .timeline-container {
-      background: white;
-      border-radius: 0 240px 240px 0;
-      padding: 48px 80px 56px 64px;
-      width: 92%;
-      max-width: 980px;
-      margin: 0 auto;
-      box-shadow: 0 8px 40px rgba(26,79,232,.07);
-      position: relative;
-      overflow: hidden;
-    }
-    /* 左側藍色裝飾條 */
-    .timeline-container::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 6px;
-      background: linear-gradient(180deg, #1a4fe8 0%, #38c1ff 100%);
-    }
-    .timeline-heading {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 28px;
-      background: linear-gradient(163deg,#1a4fe8 15%,#38c1ff 85%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .timeline-wrap{--tl-blue:#1a4fe8;--tl-cyan:#38c1ff;position:relative}
+    .timeline-container{background:white;border-radius:0 240px 240px 0;padding:48px 80px 56px 64px;width:92%;max-width:980px;margin:0 auto;box-shadow:0 8px 40px rgba(26,79,232,.07);position:relative;overflow:hidden}
+    .timeline-container::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,var(--tl-blue) 0%,var(--tl-cyan) 100%)}
+    .timeline-heading{--tl-grad:linear-gradient(163deg,#1a4fe8 15%,#38c1ff 85%);font-size:24px;font-weight:700;margin-bottom:28px;background:var(--tl-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     /* 標籤列 */
     .timeline-tabs {
       display: flex;
@@ -100,7 +75,7 @@
     .timeline-tab {
       border: 1px solid #adb5bd;
       padding: 7px 16px;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 700;
       color: #6c757d;
       cursor: pointer;
@@ -151,18 +126,9 @@
       align-items: center;
       gap: 4px;
     }
-    .tl-year-num {
-      font-size: 42px;
-      font-weight: 900;
-      line-height: 1;
-      background: linear-gradient(153deg, #1a4fe8 15%, #38c1ff 85%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -1px;
-    }
+    .tl-year-num{font-size:42px;font-weight:900;line-height:1;background:linear-gradient(153deg,var(--tl-blue,#1a4fe8) 15%,var(--tl-cyan,#38c1ff) 85%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1px}
     .tl-year-tag {
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       color: white;
       background: #1a4fe8;
@@ -188,7 +154,7 @@
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.7;
       color: #374151;
     }
@@ -239,7 +205,7 @@
       background: transparent;
       border: 1px solid #adb5bd;
       padding: 10px 16px;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
       font-family: inherit;
       color: #6c757d;
@@ -276,7 +242,7 @@
     }
     .tl-acc-tag {
       display: inline-block;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 700;
       color: white;
       background: #1a4fe8;
@@ -294,7 +260,7 @@
       gap: 8px;
     }
     .tl-acc-body ul li {
-      font-size: 14px;
+      font-size: 16px;
       line-height: 1.7;
       color: #374151;
     }
@@ -308,222 +274,118 @@
 
     .feature-card { background: #f8f9fa; box-shadow: 0 8px 16px rgba(0,0,0,.12); display: flex; flex-direction: column; }
     .card-header { padding: 10px 16px; }
-    .card-header-text { font-size: 15px; font-weight: 700; color: white; }
+    .card-header-text { font-size: 16px; font-weight: 700; color: white; }
     .card-img-placeholder { height: 160px; overflow: hidden; }
-    .card-body { padding: 14px 16px; font-size: 14px; line-height: 1.6; color: #6c757d; flex: 1; }
+    .card-body { padding: 14px 16px; font-size: 16px; line-height: 1.6; color: #6c757d; flex: 1; }
 
     /* ── MAP（滿版 + 標點彈窗）── */
-    /* MAP 外容器 */
-    .map-section {
-      position: relative;
-      width: 100%;
-      height: 70vh;
-      min-height: 520px;
-      max-height: 780px;
-      overflow: visible;
-      background: #f0f2f5;
-    }
-    /* 底圖裁切層（overflow hidden 只套在底圖上，不影響標點） */
-    .map-bg-clip {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    /* 底圖 */
-    .map-bg-img {
-      position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center;
-      user-select: none;
-      pointer-events: none;
-    }
-    /* 標點層 */
-    .map-pins-layer {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-    }
+    /* ── LEAFLET MAP ── */
+    /* ── LEAFLET MAP ── */
+    .map-section { width:100%; height:70vh; min-height:520px; max-height:780px; position:relative; background:#eef0f3; }
+    #leaflet-map { width:100%; height:100%; }
 
-    /* ── 標點按鈕 ── */
-    .map-pin-btn {
-      position: absolute;
-      transform: translate(-50%, -100%);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: none;
-      border: none;
-      padding: 0;
-      z-index: 3;
+    /* 隱藏原生控件 */
+    .leaflet-control-attribution,.leaflet-control-zoom { display:none !important; }
+
+    /* ── marker：灰色 pin + 文字（預設） ── */
+    .lf-marker { background:transparent !important; border:none !important; box-shadow:none !important; }
+    .lf-marker-inner {
+      display: flex; align-items: center; gap: 7px;
+      white-space: nowrap; cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
     }
-    /* 標點文字列（圖示 + 國名） */
-    .pin-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 6px;
+    /* pin 圖示 */
+    .lf-pin {
+      width: 24px; height: 32px; position: relative; flex-shrink: 0;
     }
-    /* 地點圖示（仿 Google Maps pin） */
-    .pin-icon {
-      width: 22px;
-      height: 28px;
-      position: relative;
-      flex-shrink: 0;
-    }
-    .pin-icon::before {
+    .lf-pin::before {
       content: '';
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
+      position: absolute; top:0; left:50%;
+      transform: translateX(-50%) rotate(-45deg);
       width: 22px; height: 22px;
       border-radius: 50% 50% 50% 0;
-      background: #6c757d;
-      rotate: -45deg;
-      transition: background .2s, transform .2s;
+      background: var(--pin-bg, #8a9ab0);
+      transition: background .2s, transform .25s;
+      box-shadow: 0 2px 6px rgba(0,0,0,.2);
     }
-    .pin-icon::after {
+    .lf-pin::after {
       content: '';
-      position: absolute;
-      top: 6px; left: 50%;
+      position: absolute; top: 6px; left: 50%;
       transform: translateX(-50%);
       width: 8px; height: 8px;
-      border-radius: 50%;
-      background: white;
-      z-index: 1;
+      border-radius: 50%; background: white;
     }
-    .map-pin-btn:hover .pin-icon::before,
-    .map-pin-btn.is-active .pin-icon::before {
-      background: #1a4fe8;
-      transform: translateX(-50%) scale(1.15);
-    }
-    /* 國名文字 */
-    .pin-name {
-      font-size: 13px;
-      font-weight: 500;
-      color: #444;
-      white-space: nowrap;
-      line-height: 1.3;
+    .lf-name {
+      font-size: 13px; font-weight: 500; color: #5a6a7a;
       transition: color .2s;
     }
-    .map-pin-btn:hover .pin-name,
-    .map-pin-btn.is-active .pin-name {
-      color: #1a4fe8;
-      font-weight: 700;
-    }
-    /* 分隔線（國名後的橫線，只在 active 顯示） */
-    .pin-line {
-      width: 60px;
-      height: 1.5px;
-      background: #1a4fe8;
-      margin-top: 2px;
-      opacity: 0;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: opacity .25s, transform .25s;
-    }
-    .map-pin-btn.is-active .pin-line {
-      opacity: 1;
-      transform: scaleX(1);
-    }
+    /* hover 狀態 */
+    .lf-marker-inner:hover .lf-pin::before { background: #1a4fe8; transform: translateX(-50%) rotate(-45deg) scale(1.1); }
+    .lf-marker-inner:hover .lf-name { color: #1a4fe8; font-weight: 700; }
 
-    /* ── 彈出資訊框 ── */
-    .map-popup {
-      position: absolute;
-      z-index: 10;
-      pointer-events: none;
-      opacity: 0;
-      transform: translateY(6px) scale(.97);
-      transition: opacity .25s ease, transform .25s ease;
-      min-width: 220px;
+    /* ── active marker：藍色 pin ── */
+    .lf-marker-inner.is-active .lf-pin::before { background: #1a4fe8; }
+    .lf-marker-inner.is-active .lf-name { color: #1a4fe8; font-weight: 700; }
+
+    /* ── Callout tooltip（附圖效果）── */
+    .leaflet-tooltip.lf-callout {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+    .leaflet-tooltip.lf-callout::before { display: none !important; }
+
+    .lf-callout-inner {
+      position: relative;
+      padding-left: 56px;  /* 橫線寬度 */
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    /* 橫線 */
+    .lf-callout-inner::before {
+      content: '';
+      position: absolute; left: 0; top: 16px;
+      width: 48px; height: 1.5px;
+      background: #1a4fe8;
+    }
+    /* 連接圓點 */
+    .lf-callout-inner::after {
+      content: '';
+      position: absolute; left: 44px; top: 10px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #1a4fe8;
+      border: 2px solid white;
+      box-shadow: 0 0 0 1.5px #1a4fe8;
+    }
+    .lf-callout-country {
+      font-size: 22px; font-weight: 900; color: #1a4fe8;
+      line-height: 1.2; margin-bottom: 6px;
+      white-space: nowrap;
+    }
+    .lf-callout-cities {
+      font-size: 13px; color: #555; line-height: 1.6;
+      border-bottom: 1px solid #d0d8e4;
+      padding-bottom: 4px;
       max-width: 300px;
     }
-    .map-popup.is-visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      pointer-events: auto;
+    .lf-callout-cities p { margin: 0 0 2px; }
+    .lf-callout-region {
+      font-size: 12px; font-weight: 700; color: #8a9ab0;
+      margin-top: 6px; margin-bottom: 2px;
     }
-    .map-popup-inner {
-      background: white;
-      box-shadow: 0 8px 32px rgba(0,0,0,.14);
-      padding: 16px 20px 18px;
-      position: relative;
-    }
-    /* 小三角形連接線 */
-    .map-popup-inner::before {
-      content: '';
-      position: absolute;
-      left: -8px; top: 20px;
-      border: 8px solid transparent;
-      border-right-color: white;
-      border-left: none;
-      filter: drop-shadow(-2px 0 2px rgba(0,0,0,.06));
-    }
-    .popup-country {
-      font-size: 22px;
-      font-weight: 900;
-      color: #0ea5e9;
-      line-height: 1.2;
-      margin-bottom: 6px;
-    }
-    .popup-divider {
-      width: 100%;
-      height: 1px;
-      background: #e9ecef;
-      margin-bottom: 10px;
-    }
-    .popup-cities {
-      font-size: 13px;
-      color: #374151;
-      line-height: 1.7;
-    }
-    .popup-cities p { margin: 0 0 3px; }
 
-    /* ── 手機版 (≤576px)：改為列表切換 ── */
-    .map-mobile-ui {
-      display: none;
-    }
-    .map-mobile-info {
-      background: white;
-      padding: 20px;
-      border-top: 3px solid #1a4fe8;
-    }
-    .map-mobile-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
+    /* ── 手機版 (≤760px)：地圖下方列表 ── */
+    .map-mobile-ui { display: none; }
+    .map-mobile-info { background: white; padding: 20px; border-top: 3px solid #1a4fe8; }
+    .map-mobile-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
     .map-mobile-tab {
-      border: 1px solid #adb5bd;
-      padding: 6px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      font-family: 'Noto Sans TC', sans-serif;
-      color: #6c757d;
-      background: transparent;
-      cursor: pointer;
-      transition: all .15s;
+      border: 1px solid #adb5bd; padding: 6px 14px; font-size: 16px; font-weight: 600;
+      font-family: 'Noto Sans TC', sans-serif; color: #6c757d; background: transparent;
+      cursor: pointer; transition: all .15s;
     }
-    .map-mobile-tab.is-active {
-      border-color: #1a4fe8;
-      color: #1a4fe8;
-      background: rgba(26,79,232,.05);
-    }
-    .map-mobile-country {
-      font-size: 20px;
-      font-weight: 900;
-      color: #0ea5e9;
-      margin-bottom: 8px;
-    }
-    .map-mobile-cities {
-      font-size: 14px;
-      color: #374151;
-      line-height: 1.7;
-    }
+    .map-mobile-tab.is-active { border-color: #1a4fe8; color: #1a4fe8; background: rgba(26,79,232,.05); }
+    .map-mobile-country { font-size: 20px; font-weight: 900; color: #0ea5e9; margin-bottom: 8px; }
+    .map-mobile-cities { font-size: 16px; color: #374151; line-height: 1.7; }
     .map-mobile-cities p { margin: 0 0 3px; }
 
 
@@ -532,7 +394,7 @@
     .bullet-list { display: flex; flex-direction: column; gap: 12px; }
     .bullet-item { background: white; padding: 14px 16px; display: flex; gap: 14px; align-items: flex-start; }
     .bullet-dot { width: 8px; height: 8px; border-radius: 50%; background: #1a4fe8; flex-shrink: 0; margin-top: 6px; }
-    .bullet-text { font-size: 14px; line-height: 1.6; color: #374151; }
+    .bullet-text { font-size: 16px; line-height: 1.6; color: #374151; }
 
     /* ── COVERAGE（附圖版：圖片上方、文字下方）── */
     .coverage-grid {
@@ -592,7 +454,7 @@
     }
     .cov-accent { color: #1a4fe8; }
     .cov-cat {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 700;
       color: #e8444a;
       letter-spacing: 1px;
@@ -600,7 +462,7 @@
       text-align: left;
     }
     .cov-src {
-      font-size: 11px;
+      font-size: 16px;
       color: #aaa;
       margin-top: 2px;
       text-align: left;
@@ -681,19 +543,19 @@
     @media (max-width: 768px) {
       .section { padding: 48px 28px; }
       h1.display { font-size: clamp(26px, 4vw, 36px); }
-      .body-text { font-size: 14px; }
+      .body-text { font-size: 16px; }
       .bordered-heading { font-size: 22px; }
 
       /* Subnav */
       .about-subnav-inner { padding: 0 16px; }
-      .about-subnav-links a { padding: 10px 12px; font-size: 13px; }
+      .about-subnav-links a { padding: 10px 12px; font-size: 16px; }
 
       /* Banner */
       .page-banner { height: 280px; }
 
       /* Timeline */
       .timeline-container { padding: 32px 32px 40px 36px; border-radius: 0 80px 80px 0; }
-      .timeline-tab { font-size: 13px; padding: 6px 12px; }
+      .timeline-tab { font-size: 16px; padding: 6px 12px; }
 
       /* Feature cards 2 欄 */
       .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -703,8 +565,8 @@
       .stat-card { padding: 18px 20px; min-width: 100px; }
       .stat-number { font-size: 30px; }
 
-      /* Map ≥761px 微調高度 */
-      .map-section { height: 58vh; min-height: 420px; }
+      /* Map 平板 */
+      .map-section { height: 55vh; min-height: 400px; }
 
       /* Coverage */
       .coverage-grid { flex-direction: column; align-items: stretch; gap: 0; }
@@ -712,7 +574,7 @@
       .coverage-item:last-child { border-bottom: none; }
       .pie-wrap { width: 90px; height: 90px; flex-shrink: 0; }
       .pie-pct { font-size: 18px; }
-      .cov-title { font-size: 15px; }
+      .cov-title { font-size: 16px; }
 
       /* Blue band */
       .blue-band { height: 280px; }
@@ -724,20 +586,7 @@
     /* ── 760px：地圖切換為上下堆疊版 ── */
     @media (max-width: 760px) {
       /* 地圖縮為上方區塊 */
-      .map-section {
-        height: 300px;
-        min-height: 240px;
-      }
-      /* 桌機彈窗隱藏 */
-      .map-popup { display: none !important; }
-      /* 標點縮小、不顯示名稱文字 */
-      .pin-name { display: none; }
-      .pin-line { display: none; }
-      .pin-icon {
-        width: 18px;
-        height: 22px;
-      }
-      /* 顯示手機版上下 UI */
+      .map-section { height: 260px; min-height: 220px; }
       .map-mobile-ui { display: block; }
     }
 
@@ -745,8 +594,8 @@
     @media (max-width: 576px) {
       .section { padding: 40px 20px; }
       h1.display { font-size: clamp(24px, 6vw, 32px); }
-      .body-text { font-size: 14px; max-width: 100%; }
-      .section-label { font-size: 10px; }
+      .body-text { font-size: 16px; max-width: 100%; }
+      .section-label { font-size: 12px; }
 
       /* Subnav */
       .about-subnav-inner .about-subnav-links { display: none; }
@@ -773,19 +622,19 @@
       .stat-card { width: 100%; max-width: 300px; padding: 16px 20px; }
       .stat-number { font-size: 28px; }
 
-      /* Map 極小螢幕高度縮小 */
-      .map-section { height: 220px; min-height: 180px; }
+      /* Map 極小螢幕 */
+      .map-section { height: 200px; min-height: 180px; }
 
       /* Recognition bullets */
       .bullet-item { padding: 12px; }
-      .bullet-text { font-size: 13px; }
+      .bullet-text { font-size: 16px; }
 
       /* Coverage */
       .coverage-item { padding: 16px 12px; gap: 14px; }
       .pie-wrap { width: 76px; height: 76px; }
       .pie-pct { font-size: 16px; }
-      .cov-title { font-size: 14px; }
-      .cov-cat { font-size: 12px; letter-spacing: .5px; }
+      .cov-title { font-size: 16px; }
+      .cov-cat { font-size: 16px; letter-spacing: .5px; }
 
       /* Blue band */
       .blue-band { height: 200px; }
@@ -795,7 +644,7 @@
 
       /* Timeline accordion */
       .tl-acc-year { font-size: 36px; }
-      .tl-acc-body ul li { font-size: 13px; }
+      .tl-acc-body ul li { font-size: 16px; }
     }
   </style>
 </head>
@@ -1509,7 +1358,7 @@
         <!-- Timeline Card -->
         <div class="timeline-wrap" style="margin-bottom:48px">
           <div class="timeline-container">
-            <p class="timeline-heading">創新・尊重・專業 43年專注深耕</p>
+            <p class="timeline-heading" id="tlHeading">創新・尊重・專業 <span id="tlYears">43</span>年專注深耕</p>
 
             <!-- 進度條 -->
             <div class="tl-progress-bar">
@@ -1518,14 +1367,14 @@
 
             <!-- 年份標籤列 -->
             <div class="timeline-tabs" id="timelineTabs">
-              <button class="timeline-tab is-active" data-tab="0">1982 啟航</button>
-              <button class="timeline-tab" data-tab="1">2008 深耕拓展</button>
-              <button class="timeline-tab" data-tab="2">2012 價值服務</button>
-              <button class="timeline-tab" data-tab="3">2015 跨越</button>
-              <button class="timeline-tab" data-tab="4">2018 聚智</button>
-              <button class="timeline-tab" data-tab="5">2021 共創</button>
-              <button class="timeline-tab" data-tab="6">2022 技術革新</button>
-              <button class="timeline-tab" data-tab="7">2024 蛻變</button>
+              <button class="timeline-tab is-active" data-tab="0" aria-expanded="true" aria-controls="tl-panel-0">1982 啟航</button>
+              <button class="timeline-tab" data-tab="1" aria-expanded="false" aria-controls="tl-panel-1">2008 深耕拓展</button>
+              <button class="timeline-tab" data-tab="2" aria-expanded="false" aria-controls="tl-panel-2">2012 價值服務</button>
+              <button class="timeline-tab" data-tab="3" aria-expanded="false" aria-controls="tl-panel-3">2015 跨越</button>
+              <button class="timeline-tab" data-tab="4" aria-expanded="false" aria-controls="tl-panel-4">2018 聚智</button>
+              <button class="timeline-tab" data-tab="5" aria-expanded="false" aria-controls="tl-panel-5">2021 共創</button>
+              <button class="timeline-tab" data-tab="6" aria-expanded="false" aria-controls="tl-panel-6">2022 技術革新</button>
+              <button class="timeline-tab" data-tab="7" aria-expanded="false" aria-controls="tl-panel-7">2024 蛻變</button>
             </div>
 
             <!-- 內容面板 -->
@@ -1534,7 +1383,7 @@
               <div class="timeline-panel is-active" data-panel="0">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num" style="font-size:42px">1982</div>
+                    <div class="tl-year-num">1982</div>
                     <div class="tl-year-tag">啟航</div>
                   </div>
                   <div class="tl-divider"></div>
@@ -1547,10 +1396,10 @@
                 </div>
               </div>
               <!-- 1: 2008 -->
-              <div class="timeline-panel" data-panel="1">
+              <div class="timeline-panel" id="tl-panel-1" role="tabpanel" data-panel="1">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num" style="font-size:42px">2008</div>
+                    <div class="tl-year-num">2008</div>
                     <div class="tl-year-tag">深耕拓展</div>
                   </div>
                   <div class="tl-divider"></div>
@@ -1564,10 +1413,10 @@
                 </div>
               </div>
               <!-- 2: 2012 -->
-              <div class="timeline-panel" data-panel="2">
+              <div class="timeline-panel" id="tl-panel-2" role="tabpanel" data-panel="2">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num" style="font-size:42px">2012</div>
+                    <div class="tl-year-num">2012</div>
                     <div class="tl-year-tag">價值服務</div>
                   </div>
                   <div class="tl-divider"></div>
@@ -1579,10 +1428,10 @@
                 </div>
               </div>
               <!-- 3: 2015 -->
-              <div class="timeline-panel" data-panel="3">
+              <div class="timeline-panel" id="tl-panel-3" role="tabpanel" data-panel="3">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num" style="font-size:42px">2015</div>
+                    <div class="tl-year-num">2015</div>
                     <div class="tl-year-tag">跨越</div>
                   </div>
                   <div class="tl-divider"></div>
@@ -1595,10 +1444,10 @@
                 </div>
               </div>
               <!-- 4: 2018 -->
-              <div class="timeline-panel" data-panel="4">
+              <div class="timeline-panel" id="tl-panel-4" role="tabpanel" data-panel="4">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num" style="font-size:42px">2018</div>
+                    <div class="tl-year-num">2018</div>
                     <div class="tl-year-tag">聚智</div>
                   </div>
                   <div class="tl-divider"></div>
@@ -1612,10 +1461,10 @@
                 </div>
               </div>
               <!-- 5: 2021 -->
-              <div class="timeline-panel" data-panel="5">
+              <div class="timeline-panel" id="tl-panel-5" role="tabpanel" data-panel="5">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num" style="font-size:42px">2021</div>
+                    <div class="tl-year-num">2021</div>
                     <div class="tl-year-tag">共創</div>
                   </div>
                   <div class="tl-divider"></div>
@@ -1628,10 +1477,10 @@
                 </div>
               </div>
               <!-- 6: 2022 -->
-              <div class="timeline-panel" data-panel="6">
+              <div class="timeline-panel" id="tl-panel-6" role="tabpanel" data-panel="6">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num" style="font-size:42px">2022</div>
+                    <div class="tl-year-num">2022</div>
                     <div class="tl-year-tag">技術革新</div>
                   </div>
                   <div class="tl-divider"></div>
@@ -1644,10 +1493,10 @@
                 </div>
               </div>
               <!-- 7: 2024 -->
-              <div class="timeline-panel" data-panel="7">
+              <div class="timeline-panel" id="tl-panel-7" role="tabpanel" data-panel="7">
                 <div class="tl-panel-inner">
                   <div class="tl-year-badge">
-                    <div class="tl-year-num" style="font-size:42px">2024</div>
+                    <div class="tl-year-num">2024</div>
                     <div class="tl-year-tag">蛻變</div>
                   </div>
                   <div class="tl-divider"></div>
@@ -1665,15 +1514,22 @@
 
         <script>
         (function(){
-          const tabs  = document.querySelectorAll('#timelineTabs .timeline-tab');
-          const panels = document.querySelectorAll('#timelinePanels .timeline-panel');
+          // 動態年數：以當前年份計算（1982年創立）
+          const founded = 1982;
+          const yearsEl = document.getElementById('tlYears');
+          if (yearsEl) yearsEl.textContent = new Date().getFullYear() - founded;
+
+          const tabs     = document.querySelectorAll('#timelineTabs .timeline-tab');
+          const panels   = document.querySelectorAll('#timelinePanels .timeline-panel');
           const progress = document.getElementById('tlProgress');
-          const total = tabs.length;
+          const total    = tabs.length;
 
           function activate(idx) {
-            tabs.forEach((t,i) => t.classList.toggle('is-active', i === idx));
-            panels.forEach((p,i) => p.classList.toggle('is-active', i === idx));
-            // 進度條 = (idx+1) / total * 100%
+            tabs.forEach((t, i) => {
+              t.classList.toggle('is-active', i === idx);
+              t.setAttribute('aria-expanded', i === idx ? 'true' : 'false');
+            });
+            panels.forEach((p, i) => p.classList.toggle('is-active', i === idx));
             if (progress) progress.style.width = ((idx + 1) / total * 100) + '%';
           }
 
@@ -1685,8 +1541,8 @@
 
       <div class="tl-mobile-accordion" id="tlAccordion">
         <div class="tl-acc-item is-open" data-acc="0">
-          <button class="tl-acc-btn">1982 啟航</button>
-          <div class="tl-acc-body">
+          <button class="tl-acc-btn" aria-expanded="true" aria-controls="acc-body-0">1982 啟航</button>
+          <div class="tl-acc-body" id="acc-body-0">
             <div class="tl-acc-year">1982</div>
             <span class="tl-acc-tag">啟航</span>
             <ul>
@@ -1696,8 +1552,8 @@
           </div>
         </div>
         <div class="tl-acc-item" data-acc="1">
-          <button class="tl-acc-btn">2008 深耕拓展</button>
-          <div class="tl-acc-body">
+          <button class="tl-acc-btn" aria-expanded="false" aria-controls="acc-body-1">2008 深耕拓展</button>
+          <div class="tl-acc-body" id="acc-body-1">
             <div class="tl-acc-year">2008</div>
             <span class="tl-acc-tag">深耕拓展</span>
             <ul>
@@ -1708,8 +1564,8 @@
           </div>
         </div>
         <div class="tl-acc-item" data-acc="2">
-          <button class="tl-acc-btn">2012 價值服務</button>
-          <div class="tl-acc-body">
+          <button class="tl-acc-btn" aria-expanded="false" aria-controls="acc-body-2">2012 價值服務</button>
+          <div class="tl-acc-body" id="acc-body-2">
             <div class="tl-acc-year">2012</div>
             <span class="tl-acc-tag">價值服務</span>
             <ul>
@@ -1718,8 +1574,8 @@
           </div>
         </div>
         <div class="tl-acc-item" data-acc="3">
-          <button class="tl-acc-btn">2015 跨越</button>
-          <div class="tl-acc-body">
+          <button class="tl-acc-btn" aria-expanded="false" aria-controls="acc-body-3">2015 跨越</button>
+          <div class="tl-acc-body" id="acc-body-3">
             <div class="tl-acc-year">2015</div>
             <span class="tl-acc-tag">跨越</span>
             <ul>
@@ -1729,8 +1585,8 @@
           </div>
         </div>
         <div class="tl-acc-item" data-acc="4">
-          <button class="tl-acc-btn">2018 聚智</button>
-          <div class="tl-acc-body">
+          <button class="tl-acc-btn" aria-expanded="false" aria-controls="acc-body-4">2018 聚智</button>
+          <div class="tl-acc-body" id="acc-body-4">
             <div class="tl-acc-year">2018</div>
             <span class="tl-acc-tag">聚智</span>
             <ul>
@@ -1741,8 +1597,8 @@
           </div>
         </div>
         <div class="tl-acc-item" data-acc="5">
-          <button class="tl-acc-btn">2021 共創</button>
-          <div class="tl-acc-body">
+          <button class="tl-acc-btn" aria-expanded="false" aria-controls="acc-body-5">2021 共創</button>
+          <div class="tl-acc-body" id="acc-body-5">
             <div class="tl-acc-year">2021</div>
             <span class="tl-acc-tag">共創</span>
             <ul>
@@ -1752,8 +1608,8 @@
           </div>
         </div>
         <div class="tl-acc-item" data-acc="6">
-          <button class="tl-acc-btn">2022 技術革新</button>
-          <div class="tl-acc-body">
+          <button class="tl-acc-btn" aria-expanded="false" aria-controls="acc-body-6">2022 技術革新</button>
+          <div class="tl-acc-body" id="acc-body-6">
             <div class="tl-acc-year">2022</div>
             <span class="tl-acc-tag">技術革新</span>
             <ul>
@@ -1763,8 +1619,8 @@
           </div>
         </div>
         <div class="tl-acc-item" data-acc="7">
-          <button class="tl-acc-btn">2024 蛻變</button>
-          <div class="tl-acc-body">
+          <button class="tl-acc-btn" aria-expanded="false" aria-controls="acc-body-7">2024 蛻變</button>
+          <div class="tl-acc-body" id="acc-body-7">
             <div class="tl-acc-year">2024</div>
             <span class="tl-acc-tag">蛻變</span>
             <ul>
@@ -1778,12 +1634,17 @@
       (function(){
         const accItems = document.querySelectorAll('#tlAccordion .tl-acc-item');
         accItems.forEach(item => {
-          item.querySelector('.tl-acc-btn').addEventListener('click', () => {
+          const btn = item.querySelector('.tl-acc-btn');
+          btn.addEventListener('click', () => {
             const isOpen = item.classList.contains('is-open');
-            // 關閉所有
-            accItems.forEach(i => i.classList.remove('is-open'));
-            // 如果原本沒開，就開啟（點同一個再點 → 關閉）
-            if (!isOpen) item.classList.add('is-open');
+            accItems.forEach(i => {
+              i.classList.remove('is-open');
+              i.querySelector('.tl-acc-btn').setAttribute('aria-expanded', 'false');
+            });
+            if (!isOpen) {
+              item.classList.add('is-open');
+              btn.setAttribute('aria-expanded', 'true');
+            }
           });
         });
       })();
@@ -1800,22 +1661,22 @@
         <div class="cards-grid">
           <div class="feature-card">
             <div class="card-header" style="background:#0ea5e9"><div class="card-header-text">技術自主、轉型落地</div></div>
-            <div class="card-img-placeholder"><img src="images/154-1.webp" alt="技術自主、轉型落地" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+            <div class="card-img-placeholder"><img src="images/154-1.webp" alt="技術自主、轉型落地" width="244" height="160" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="card-body">鼎新數智結合長期累積的 ERP 與產業營運知識，以自研技術建構可落地的「企業級Agent運行生態平台」，讓 AI 真正進入企業日常營運流程，推動營運流程的變革，邁向數智轉型。</div>
           </div>
           <div class="feature-card">
             <div class="card-header" style="background:#0ea5e9"><div class="card-header-text">價值交付為方法論</div></div>
-            <div class="card-img-placeholder"><img src="images/154-2.webp" alt="價值交付為方法論" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+            <div class="card-img-placeholder"><img src="images/154-2.webp" alt="價值交付為方法論" width="244" height="160" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="card-body">鼎新數智始終以客戶真實需求為出發點，並以創造可驗證的企業營運效益為最終導向，發展出獨有的「價值交付」方法論，讓 AI 轉型能真正承接企業管理與營運需求，支持企業穩定成長。</div>
           </div>
           <div class="feature-card">
             <div class="card-header" style="background:#0ea5e9"><div class="card-header-text">驅動新的商業模式</div></div>
-            <div class="card-img-placeholder"><img src="images/154-3.webp" alt="驅動新的商業模式" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+            <div class="card-img-placeholder"><img src="images/154-3.webp" alt="驅動新的商業模式" width="244" height="160" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="card-body">基於對「數智原生企業」的願景與「智能＋」戰略目標，鼎新數智以「用數據和智能技術創新生產力」為核心使命，將 AI 深度融入企業營運流程，重塑營運與商業模式。</div>
           </div>
           <div class="feature-card">
             <div class="card-header" style="background:#0ea5e9"><div class="card-header-text">建構AI生態系</div></div>
-            <div class="card-img-placeholder"><img src="images/154-4.webp" alt="建構AI生態系" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+            <div class="card-img-placeholder"><img src="images/154-4.webp" alt="建構AI生態系" width="244" height="160" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
             <div class="card-body">以平台為核心，串聯客戶、ISV夥伴與開發者，共同打造可共創、可擴充的 AI 應用生態系，讓場景持續累積、價值不斷放大，共利共榮，加速創新應用落地，推動數智價值在產業中持續擴散。</div>
           </div>
         </div>
@@ -1846,190 +1707,239 @@
 
     </div><!-- /bg1-wrap -->
 
-    <!-- ══ MAP：滿版地圖 + 標點彈窗 ══ -->
-    <div class="map-section" id="mapSection">
+    <!-- ══ LEAFLET MAP ══ -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
-      <!-- 底圖（獨立裁切，不影響標點） -->
-      <div class="map-bg-clip">
-        <img class="map-bg-img" src="images/map-1.webp" alt="亞太地圖">
-      </div>
+    <div class="map-section">
+      <div id="leaflet-map"></div>
+    </div>
 
-      <!-- 標點層 -->
-      <div class="map-pins-layer">
-
-        <button class="map-pin-btn" style="left:50.5%;top:9%"
-          data-idx="0" data-side="right">
-          <div class="pin-row">
-            <span class="pin-icon"></span>
-            <span class="pin-name">台灣｜ Taiwan</span>
-          </div>
-          <div class="pin-line"></div>
-        </button>
-
-        <button class="map-pin-btn" style="left:40%;top:9%"
-          data-idx="1" data-side="left">
-          <div class="pin-row">
-            <span class="pin-icon"></span>
-            <span class="pin-name">中國｜China</span>
-          </div>
-          <div class="pin-line"></div>
-        </button>
-
-        <button class="map-pin-btn" style="left:39%;top:48%"
-          data-idx="2" data-side="left">
-          <div class="pin-row">
-            <span class="pin-icon"></span>
-            <span class="pin-name">泰國｜ Thailand</span>
-          </div>
-          <div class="pin-line"></div>
-        </button>
-
-        <button class="map-pin-btn" style="left:52%;top:43%"
-          data-idx="3" data-side="left">
-          <div class="pin-row">
-            <span class="pin-icon"></span>
-            <span class="pin-name">越南｜ Vietnam</span>
-          </div>
-          <div class="pin-line"></div>
-        </button>
-
-        <button class="map-pin-btn" style="left:34%;top:73%"
-          data-idx="4" data-side="left">
-          <div class="pin-row">
-            <span class="pin-icon"></span>
-            <span class="pin-name">馬來西亞｜ Malaysia</span>
-          </div>
-          <div class="pin-line"></div>
-        </button>
-
-        <button class="map-pin-btn" style="left:45%;top:89%"
-          data-idx="5" data-side="left">
-          <div class="pin-row">
-            <span class="pin-icon"></span>
-            <span class="pin-name">印尼｜ Indonesia</span>
-          </div>
-          <div class="pin-line"></div>
-        </button>
-
-      </div>
-
-
-      <!-- 共用彈窗（JS 控制位置） -->
-      <div class="map-popup" id="mapPopup">
-        <div class="map-popup-inner">
-          <div class="popup-country" id="popupCountry"></div>
-          <div class="popup-divider"></div>
-          <div class="popup-cities" id="popupCities"></div>
-        </div>
-      </div>
-
-
-    </div><!-- /map-section -->
-
-
-      <!-- 手機版地圖 UI（≤576px）-->
-      <div class="map-mobile-ui" id="mapMobileUi">
-        <div class="map-mobile-info">
-          <div class="map-mobile-tabs" id="mapMobileTabs">
+    <!-- 手機版地圖 UI（≤760px）-->
+    <div class="map-mobile-ui" id="mapMobileUi">
+      <div class="map-mobile-info">
+        <div class="map-mobile-tabs" id="mapMobileTabs">
           <button class="map-mobile-tab is-active" data-midx="0">台灣</button>
           <button class="map-mobile-tab" data-midx="1">中國</button>
           <button class="map-mobile-tab" data-midx="2">泰國</button>
           <button class="map-mobile-tab" data-midx="3">越南</button>
           <button class="map-mobile-tab" data-midx="4">馬來西亞</button>
           <button class="map-mobile-tab" data-midx="5">印尼</button>
-          </div>
-          <div class="map-mobile-country" id="mapMobileCountry">台灣｜ Taiwan</div>
-          <div class="map-mobile-cities" id="mapMobileCities"><p>台北｜桃園｜新竹｜台中｜台南｜高雄</p></div>
         </div>
+        <div class="map-mobile-country" id="mapMobileCountry">台灣｜Taiwan</div>
+        <div class="map-mobile-cities" id="mapMobileCities"></div>
       </div>
+    </div>
 
-
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
     (function(){
-      const LOC_DATA = [
-        {"name": "台灣｜ Taiwan",      "cities": "<p>台北｜桃園｜新竹｜台中｜台南｜高雄</p>"},
-        {"name": "中國｜China",         "cities": "<p>華東：上海・蘇州・南京・無錫・杭州・寧波</p><p>廣東：東莞・廣州</p><p>深圳・珠海・廈門・重慶・成都・昆山・惠州</p>"},
-        {"name": "泰國｜ Thailand",     "cities": "<p>曼谷・羅勇・春武里</p>"},
-        {"name": "越南｜ Vietnam",      "cities": "<p>河內・胡志明市・平陽</p>"},
-        {"name": "馬來西亞｜ Malaysia", "cities": "<p>Kuala Lumpur</p><p>DSC Consulting Sdn.Bhd (Digiwin.com.my)</p>"},
-        {"name": "印尼｜ Indonesia",    "cities": "<p>雅加達・泗水</p>"}
+
+      /* ════════════════════════════════════════════════════════════
+         地點資料
+         cities 結構：純文字 or 分區（region）形式
+      ════════════════════════════════════════════════════════════ */
+      const LOCS = [
+        {
+          id:   'tw',
+          name: '台灣｜Taiwan',
+          lat:  25.0,
+          lng:  121.3,
+          calloutDir: 'right',   // callout 往右
+          cities: [
+            { text: '台北｜桃園｜新竹｜台中｜台南｜高雄' }
+          ]
+        },
+        {
+          id:   'cn',
+          name: '中國｜China',
+          lat:  31.2,
+          lng:  112.0,
+          calloutDir: 'right',
+          cities: [
+            { region: '華東地區', text: '上海、杭州、寧波、溫州、紹興、嘉興、湖州、金華、台州' },
+            { region: '',         text: '南京、蘇州、無錫、常州、南通、泰州' },
+            { region: '',         text: '合肥、蕪湖、濟南、青島、福州、廈門、泉州' },
+            { region: '華北地區', text: '北京、天津' },
+            { region: '華中及中部地區', text: '武漢、長沙、南昌、鄭州' },
+            { region: '華南地區', text: '廣州、深圳、佛山、東莞、中山、惠州' },
+            { region: '西南地區', text: '成都、重慶' }
+          ]
+        },
+        {
+          id:   'th',
+          name: '泰國｜Thailand',
+          lat:  13.7,
+          lng:  100.5,
+          calloutDir: 'right',
+          cities: [{ text: '曼谷' }]
+        },
+        {
+          id:   'vn',
+          name: '越南｜Vietnam',
+          lat:  10.8,
+          lng:  106.7,
+          calloutDir: 'right',
+          cities: [{ text: '胡志明市' }]
+        },
+        {
+          id:   'my',
+          name: '馬來西亞｜Malaysia',
+          lat:  3.1,
+          lng:  101.7,
+          calloutDir: 'right',
+          cities: [{ text: '吉隆坡' }]
+        },
+        {
+          id:   'id',
+          name: '印尼｜Indonesia',
+          lat:  -6.2,
+          lng:  106.8,
+          calloutDir: 'right',
+          cities: [{ text: '雅加達' }]
+        }
       ];
 
-      const pins       = document.querySelectorAll('.map-pin-btn');
-      const popup      = document.getElementById('mapPopup');
-      const popCountry = document.getElementById('popupCountry');
-      const popCities  = document.getElementById('popupCities');
+      /* ── callout HTML 產生器 ── */
+      function calloutHTML(loc) {
+        let citiesHTML = '';
+        loc.cities.forEach(c => {
+          if (c.region) citiesHTML += `<div class="lf-callout-region">${c.region}</div>`;
+          citiesHTML += `<p>${c.text}</p>`;
+        });
+        return `<div class="lf-callout-inner">
+                  <div class="lf-callout-country">${loc.name}</div>
+                  <div class="lf-callout-cities">${citiesHTML}</div>
+                </div>`;
+      }
+
+      /* ── 手機版 HTML ── */
+      function mobileCitiesHTML(loc) {
+        let html = '';
+        loc.cities.forEach(c => {
+          if (c.region) html += `<p><strong>${c.region}</strong></p>`;
+          html += `<p>${c.text}</p>`;
+        });
+        return html;
+      }
+
+      /* ── marker icon 產生（灰/藍）── */
+      function makeIcon(loc, active) {
+        const pinColor = active ? '#1a4fe8' : '#8a9ab0';
+        const nameColor = active ? '#1a4fe8' : '#5a6a7a';
+        const fw = active ? '700' : '500';
+        return L.divIcon({
+          className: 'lf-marker',
+          html: `<div class="lf-marker-inner${active ? ' is-active' : ''}">
+                   <span class="lf-pin" style="--pin-bg:${pinColor}"></span>
+                   <span class="lf-name" style="color:${nameColor};font-weight:${fw}">${loc.name}</span>
+                 </div>`,
+          iconAnchor:  [12, 32],
+          tooltipAnchor: [12, -32]
+        });
+      }
+
+      /* ── Leaflet 初始化 ── */
+      const map = L.map('leaflet-map', {
+        center: [15, 110],
+        zoom: 5,
+        minZoom: 4,
+        maxZoom: 7,
+        zoomControl: false,
+        scrollWheelZoom: false,
+        dragging: true,
+        attributionControl: false
+      });
+
+      /* ── 底圖：你的自訂地圖圖片 ── */
+      // 用 CartoDB 作為底層 tile（跟你底圖風格接近），再疊你的圖
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+        subdomains: 'abcd', maxZoom: 10
+      }).addTo(map);
+
+      // 疊上你的自訂底圖（imageOverlay，覆蓋東南亞+台灣+中國區域）
+      L.imageOverlay(
+        'images/map-1.webp',
+        [[-10, 88], [45, 140]],
+        { opacity: 1, zIndex: 1 }
+      ).addTo(map);
+
+      /* ── 建立 markers ── */
+      const markers = [];
+      let activeIdx  = -1;
+
+      LOCS.forEach((loc, i) => {
+        const m = L.marker([loc.lat, loc.lng], {
+          icon: makeIcon(loc, false),
+          zIndexOffset: 0
+        }).addTo(map);
+
+        // 綁定 tooltip（永遠顯示，點擊後才顯示）
+        m.bindTooltip(calloutHTML(loc), {
+          permanent:   false,
+          direction:   loc.calloutDir,
+          className:   'lf-callout',
+          offset:      L.point(14, -28),
+          interactive: false
+        });
+
+        m.on('click', () => {
+          if (activeIdx === i) {
+            /* 再點一次 → 關閉 */
+            m.setIcon(makeIcon(loc, false));
+            m.closeTooltip();
+            activeIdx = -1;
+          } else {
+            /* 關閉所有 */
+            markers.forEach((mm, j) => {
+              mm.setIcon(makeIcon(LOCS[j], false));
+              mm.closeTooltip();
+            });
+            /* 啟動這個 */
+            m.setIcon(makeIcon(loc, true));
+            m.openTooltip();
+            map.panTo([loc.lat, loc.lng], { animate: true, duration: 0.4 });
+            activeIdx = i;
+          }
+        });
+
+        /* 點地圖空白處關閉 */
+        map.on('click', () => {
+          markers.forEach((mm, j) => {
+            mm.setIcon(makeIcon(LOCS[j], false));
+            mm.closeTooltip();
+          });
+          activeIdx = -1;
+        });
+
+        markers.push(m);
+      });
+
+      /* ── 手機版 Tab 切換 ── */
       const mobileTabs = document.querySelectorAll('.map-mobile-tab');
       const mobCountry = document.getElementById('mapMobileCountry');
       const mobCities  = document.getElementById('mapMobileCities');
-      const mapSection = document.getElementById('mapSection');
 
-      let activeIdx = -1;
+      // 初始化第一個
+      if (mobCities) mobCities.innerHTML = mobileCitiesHTML(LOCS[0]);
 
-      function showPopup(pin, idx) {
-        const loc = LOC_DATA[idx];
-        popCountry.textContent = loc.name;
-        popCities.innerHTML    = loc.cities;
-
-        const mapRect = mapSection.getBoundingClientRect();
-        const pinRect = pin.getBoundingClientRect();
-        const side    = pin.dataset.side;
-        const pinX    = pinRect.left - mapRect.left + pinRect.width / 2;
-        const pinY    = pinRect.top  - mapRect.top;
-
-        popup.style.top = (pinY - 50) + 'px';
-
-        if (side === 'right') {
-          popup.style.left  = '';
-          popup.style.right = (mapRect.width - pinX + 12) + 'px';
-        } else {
-          popup.style.right = '';
-          popup.style.left  = (pinX + 16) + 'px';
-        }
-        popup.classList.add('is-visible');
-      }
-
-      function hidePopup() {
-        popup.classList.remove('is-visible');
-      }
-
-      // 桌機標點點擊
-      pins.forEach((pin, idx) => {
-        pin.addEventListener('click', (e) => {
-          e.stopPropagation();
-          if (activeIdx === idx) {
-            pins.forEach(p => p.classList.remove('is-active'));
-            hidePopup();
-            activeIdx = -1;
-          } else {
-            pins.forEach(p => p.classList.remove('is-active'));
-            pin.classList.add('is-active');
-            showPopup(pin, idx);
-            activeIdx = idx;
-          }
-        });
-      });
-
-      // 點地圖空白處關閉彈窗
-      mapSection.addEventListener('click', () => {
-        pins.forEach(p => p.classList.remove('is-active'));
-        hidePopup();
-        activeIdx = -1;
-      });
-
-      // 手機版 Tab 切換
       mobileTabs.forEach((tab, idx) => {
         tab.addEventListener('click', () => {
           mobileTabs.forEach(t => t.classList.remove('is-active'));
           tab.classList.add('is-active');
-          mobCountry.textContent = LOC_DATA[idx].name;
-          mobCities.innerHTML    = LOC_DATA[idx].cities;
+          mobCountry.textContent = LOCS[idx].name;
+          mobCities.innerHTML    = mobileCitiesHTML(LOCS[idx]);
         });
       });
+
+      /* ── resize ── */
+      window.addEventListener('resize', () => {
+        setTimeout(() => map.invalidateSize(), 100);
+      });
+
     })();
     </script>
 
-    <!-- ══ RECOGNITION ══ -->
+        <!-- ══ RECOGNITION ══ -->
     <section style="background:#f7f8fc">
       <div class="section">
         <div style="max-width:960px;margin:0 auto">
@@ -2039,7 +1949,7 @@
             <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text">兩千大產業排行統計，鼎新客戶覆蓋率達73%。其中，2021年首次上榜的企業共104家，有63家是鼎新客戶，覆蓋率達 61%。</div></div>
             <div class="bullet-item"><div class="bullet-dot"></div><div class="bullet-text">兩千大中的營運績效 50 強，是《天下》評估近三年營收成長率、稅後純益成長率、股東權益報酬率等綜合指數所評選的結果，鼎新客戶覆蓋率高達 76%。</div></div>
           </div>
-          <p style="font-size:13px;color:#6b7280;line-height:1.5">*資料來源：天下雜誌 823 期《天下兩千大調查》及鼎新數智內部統計數據。數值代表鼎新客戶於各項指標中的覆蓋比例。</p>
+          <p style="font-size:16px;color:#6b7280;line-height:1.5">*資料來源：天下雜誌 823 期《天下兩千大調查》及鼎新數智內部統計數據。數值代表鼎新客戶於各項指標中的覆蓋比例。</p>
         </div>
       </div>
     </section>
@@ -2051,7 +1961,7 @@
         <div class="coverage-grid">
           <div class="coverage-item">
             <div class="pie-wrap">
-              <img src="images/73percent.webp" alt="73% 覆蓋率">
+              <img src="images/73percent.webp" alt="73% 覆蓋率" width="160" height="160" loading="lazy">
               <div class="pie-center"><span class="pie-pct">73%</span></div>
             </div>
             <div>
@@ -2062,7 +1972,7 @@
           </div>
           <div class="coverage-item">
             <div class="pie-wrap">
-              <img src="images/76percent.webp" alt="76% 覆蓋率">
+              <img src="images/76percent.webp" alt="76% 覆蓋率" width="160" height="160" loading="lazy">
               <div class="pie-center"><span class="pie-pct">76%</span></div>
             </div>
             <div>
@@ -2073,7 +1983,7 @@
           </div>
           <div class="coverage-item">
             <div class="pie-wrap">
-              <img src="images/61percent.webp" alt="61% 覆蓋率">
+              <img src="images/61percent.webp" alt="61% 覆蓋率" width="160" height="160" loading="lazy">
               <div class="pie-center"><span class="pie-pct">61%</span></div>
             </div>
             <div>
