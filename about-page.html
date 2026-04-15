@@ -329,7 +329,7 @@
     /* ── 右側浮動資訊面板 ── */
     .map-info-panel {
       position: absolute;
-      top: 24px; right: 24px;
+      top: 24px; right: 500px;
       z-index: 900;
       width: 280px;
       background: rgba(255,255,255,0.97);
@@ -585,10 +585,9 @@
       .promise-block { font-size: 17px; }
     }
 
-    /* ── 760px：地圖切換為上下堆疊版 ── */
-    @media (max-width: 760px) {
-      /* 地圖縮為上方區塊 */
-      .map-section { height: 260px; min-height: 220px; }
+    /* ── 800px：隱藏 Leaflet 地圖，只顯示手機版列表 ── */
+    @media (max-width: 800px) {
+      .map-section { display: none; }
       .map-mobile-ui { display: block; }
     }
 
@@ -1884,7 +1883,6 @@
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
         subdomains: 'abcd', maxZoom: 10
       }).addTo(map);
-
 
       /* ── 建立 markers ── */
       const markers = [];
