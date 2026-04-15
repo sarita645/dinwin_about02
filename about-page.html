@@ -326,52 +326,54 @@
     .lf-marker-inner.is-active .lf-pin::before { background: #1a4fe8; }
     .lf-marker-inner.is-active .lf-name { color: #1a4fe8; font-weight: 700; }
 
-    /* ── Callout tooltip（附圖效果）── */
-    .leaflet-tooltip.lf-callout {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      padding: 0 !important;
-    }
-    .leaflet-tooltip.lf-callout::before { display: none !important; }
-
-    .lf-callout-inner {
-      position: relative;
-      padding-left: 56px;  /* 橫線寬度 */
+    /* ── 右側浮動資訊面板 ── */
+    .map-info-panel {
+      position: absolute;
+      top: 24px; right: 24px;
+      z-index: 900;
+      width: 280px;
+      background: rgba(255,255,255,0.97);
+      box-shadow: 0 4px 24px rgba(0,0,0,.13);
       font-family: 'Noto Sans TC', sans-serif;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateX(12px);
+      transition: opacity .25s ease, transform .25s ease;
     }
-    /* 橫線 */
-    .lf-callout-inner::before {
-      content: '';
-      position: absolute; left: 0; top: 16px;
-      width: 48px; height: 1.5px;
+    .map-info-panel.is-visible {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+    .map-info-header {
       background: #1a4fe8;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
-    /* 連接圓點 */
-    .lf-callout-inner::after {
-      content: '';
-      position: absolute; left: 44px; top: 10px;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: #1a4fe8;
-      border: 2px solid white;
-      box-shadow: 0 0 0 1.5px #1a4fe8;
+    .map-info-name {
+      font-size: 18px; font-weight: 900; color: white; line-height: 1.2;
     }
-    .lf-callout-country {
-      font-size: 22px; font-weight: 900; color: #1a4fe8;
-      line-height: 1.2; margin-bottom: 6px;
-      white-space: nowrap;
+    .map-info-close {
+      background: transparent; border: none; color: rgba(255,255,255,.7);
+      cursor: pointer; font-size: 20px; line-height: 1; padding: 0;
+      transition: color .15s;
     }
-    .lf-callout-cities {
-      font-size: 13px; color: #555; line-height: 1.6;
-      border-bottom: 1px solid #d0d8e4;
-      padding-bottom: 4px;
-      max-width: 300px;
+    .map-info-close:hover { color: white; }
+    .map-info-body {
+      padding: 16px 20px 20px;
+      max-height: calc(70vh - 120px);
+      overflow-y: auto;
     }
-    .lf-callout-cities p { margin: 0 0 2px; }
-    .lf-callout-region {
-      font-size: 12px; font-weight: 700; color: #8a9ab0;
-      margin-top: 6px; margin-bottom: 2px;
+    .map-info-region {
+      font-size: 12px; font-weight: 700; color: #1a4fe8;
+      text-transform: uppercase; letter-spacing: .5px;
+      margin: 12px 0 4px; border-top: 1px solid #e9ecef; padding-top: 10px;
+    }
+    .map-info-region:first-child { margin-top: 0; border-top: none; padding-top: 0; }
+    .map-info-cities {
+      font-size: 14px; color: #374151; line-height: 1.7;
     }
 
     /* ── 手機版 (≤760px)：地圖下方列表 ── */
@@ -1712,6 +1714,14 @@
 
     <div class="map-section">
       <div id="leaflet-map"></div>
+      <!-- 右側浮動資訊面板 -->
+      <div class="map-info-panel" id="mapInfoPanel">
+        <div class="map-info-header">
+          <div class="map-info-name" id="mapInfoName"></div>
+          <button class="map-info-close" id="mapInfoClose" aria-label="關閉">✕</button>
+        </div>
+        <div class="map-info-body" id="mapInfoBody"></div>
+      </div>
     </div>
 
     <!-- 手機版地圖 UI（≤760px）-->
@@ -1799,19 +1809,6 @@
         }
       ];
 
-      /* ── callout HTML 產生器 ── */
-      function calloutHTML(loc) {
-        let citiesHTML = '';
-        loc.cities.forEach(c => {
-          if (c.region) citiesHTML += `<div class="lf-callout-region">${c.region}</div>`;
-          citiesHTML += `<p>${c.text}</p>`;
-        });
-        return `<div class="lf-callout-inner">
-                  <div class="lf-callout-country">${loc.name}</div>
-                  <div class="lf-callout-cities">${citiesHTML}</div>
-                </div>`;
-      }
-
       /* ── 手機版 HTML ── */
       function mobileCitiesHTML(loc) {
         let html = '';
@@ -1838,25 +1835,57 @@
         });
       }
 
+      /* ── 面板 DOM refs ── */
+      const infoPanel = document.getElementById('mapInfoPanel');
+      const infoName  = document.getElementById('mapInfoName');
+      const infoBody  = document.getElementById('mapInfoBody');
+      const infoClose = document.getElementById('mapInfoClose');
+
+      /* ── 右側面板內容產生 ── */
+      function panelBodyHTML(loc) {
+        let html = '';
+        loc.cities.forEach(c => {
+          if (c.region) {
+            html += `<div class="map-info-region">${c.region}</div>`;
+          }
+          html += `<div class="map-info-cities">${c.text}</div>`;
+        });
+        return html;
+      }
+
+      function showPanel(loc) {
+        infoName.textContent = loc.name;
+        infoBody.innerHTML   = panelBodyHTML(loc);
+        infoPanel.classList.add('is-visible');
+      }
+      function hidePanel() {
+        infoPanel.classList.remove('is-visible');
+      }
+
+      /* 關閉按鈕 */
+      if (infoClose) {
+        infoClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          hidePanel();
+          markers.forEach((mm, j) => mm.setIcon(makeIcon(LOCS[j], false)));
+          activeIdx = -1;
+        });
+      }
+
       /* ── Leaflet 初始化 ── */
       const map = L.map('leaflet-map', {
-        center: [15, 110],
-        zoom: 5,
-        minZoom: 4,
-        maxZoom: 7,
-        zoomControl: false,
+        zoomControl:     false,
         scrollWheelZoom: false,
-        dragging: true,
+        dragging:        true,
         attributionControl: false
       });
 
-      /* ── 底圖：你的自訂地圖圖片 ── */
-      // 用 CartoDB 作為底層 tile（跟你底圖風格接近），再疊你的圖
+      /* ── 底圖 tile ── */
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
         subdomains: 'abcd', maxZoom: 10
       }).addTo(map);
 
-      // 疊上你的自訂底圖（imageOverlay，覆蓋東南亞+台灣+中國區域）
+      /* ── 自訂底圖 overlay ── */
       L.imageOverlay(
         'images/map-1.webp',
         [[-10, 88], [45, 140]],
@@ -1873,45 +1902,37 @@
           zIndexOffset: 0
         }).addTo(map);
 
-        // 綁定 tooltip（永遠顯示，點擊後才顯示）
-        m.bindTooltip(calloutHTML(loc), {
-          permanent:   false,
-          direction:   loc.calloutDir,
-          className:   'lf-callout',
-          offset:      L.point(14, -28),
-          interactive: false
-        });
-
-        m.on('click', () => {
+        m.on('click', (e) => {
+          L.DomEvent.stopPropagation(e);
           if (activeIdx === i) {
             /* 再點一次 → 關閉 */
             m.setIcon(makeIcon(loc, false));
-            m.closeTooltip();
+            hidePanel();
             activeIdx = -1;
           } else {
-            /* 關閉所有 */
-            markers.forEach((mm, j) => {
-              mm.setIcon(makeIcon(LOCS[j], false));
-              mm.closeTooltip();
-            });
-            /* 啟動這個 */
+            /* 關閉所有，啟動這個 */
+            markers.forEach((mm, j) => mm.setIcon(makeIcon(LOCS[j], false)));
             m.setIcon(makeIcon(loc, true));
-            m.openTooltip();
-            map.panTo([loc.lat, loc.lng], { animate: true, duration: 0.4 });
+            showPanel(loc);
             activeIdx = i;
           }
         });
 
-        /* 點地圖空白處關閉 */
-        map.on('click', () => {
-          markers.forEach((mm, j) => {
-            mm.setIcon(makeIcon(LOCS[j], false));
-            mm.closeTooltip();
-          });
-          activeIdx = -1;
-        });
-
         markers.push(m);
+      });
+
+      /* ── 點地圖空白處關閉 ── */
+      map.on('click', () => {
+        markers.forEach((mm, j) => mm.setIcon(makeIcon(LOCS[j], false)));
+        hidePanel();
+        activeIdx = -1;
+      });
+
+      /* ── 初始視角：fitBounds 包含所有據點 ── */
+      const allLatLngs = LOCS.map(l => [l.lat, l.lng]);
+      map.fitBounds(allLatLngs, {
+        padding: [40, 40],   // 四邊留白
+        maxZoom: 6           // 最大只縮放到 zoom 6，不要太近
       });
 
       /* ── 手機版 Tab 切換 ── */
@@ -1919,7 +1940,6 @@
       const mobCountry = document.getElementById('mapMobileCountry');
       const mobCities  = document.getElementById('mapMobileCities');
 
-      // 初始化第一個
       if (mobCities) mobCities.innerHTML = mobileCitiesHTML(LOCS[0]);
 
       mobileTabs.forEach((tab, idx) => {
